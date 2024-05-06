@@ -1,4 +1,5 @@
 from django.db import models
+import uuid
 # Create your models here.
 class Direccion(models.Model):
     calle = models.CharField(max_length=50,null=False)
@@ -31,9 +32,6 @@ class Usuario(models.Model):
     def __str__(self):
         return self.Nombre_1 + ' ' + self.Apellido_1
 
-
-
-
 class Inmueble(models.Model):
     nombre = models.CharField(max_length=50, null=False)
     description = models.TextField(null=False)
@@ -50,5 +48,13 @@ class Inmueble(models.Model):
         return self.tipo_de_inmueble + ' ' + self.nombre + ' ' + str(self.precio_arriendo)
 
 
+class ContactForm(models.Model) :
+    contact_form_uuid = models.UUIDField(default=uuid.uuid4, editable=False)
+    customer_email = models.EmailField()
+    customer_name = models.CharField(max_length=64)
+    message = models.TextField()
+    date_sent = models.DateTimeField(auto_now_add=True)
 
 
+    def __str__(self):
+        return self.customer_name + ' ' + self.date_sent.strftime("%d/%m/%Y")
