@@ -23,7 +23,21 @@
                 <a class="nav-link" href="{% url 'contacto' %}">Contacto</a>
               </li>
             </ul>
-           
+            <form class="justify-content-start">
+              {% if request.user.is_authenticated %} {{ user.username | upper }}
+              ({{ user.email }})
+      
+              <form action="{% url 'logout' %}" method="POST">
+                {% csrf_token %} 
+                <button class="btn btn-dark" type="submit">Logout</button>
+            </form>
+              {% else %}
+              <a class="btn btn-dark" href="{% url 'login' %}" role="button">Login</a>
+              <a class="btn btn-dark" href="{% url 'registro' %}" role="button"
+                >Registrarse</a
+              >
+              {% endif %}
+            </form>
           </div>
         </div>
       </nav>

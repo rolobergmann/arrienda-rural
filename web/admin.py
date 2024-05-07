@@ -5,7 +5,7 @@ from .models import ContactForm
 admin.site.register(ContactForm)
 # Register your models here.
 class UsuarioAdmin(admin.ModelAdmin):
-    list_display = ('rut', 'Nombre_1', 'Nombre_2', 'Apellido_1', 'Apellido_2', 'email', 'telefono', 'tipo_usuario', 'direccion')
+    list_display = ('rut', 'nombre_1', 'nombre_2', 'apellido_1', 'apellido_2', 'email', 'telefono', 'tipo_usuario', 'direccion')
     search_fields = ('rut','Apellido_1')
     filter_fields = ('tipo_usuario')
 

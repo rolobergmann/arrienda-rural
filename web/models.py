@@ -1,5 +1,7 @@
 from django.db import models
 import uuid
+from django.contrib.auth.models import AbstractUser, Group, Permission, BaseUserManager
+
 # Create your models here.
 class Direccion(models.Model):
     calle = models.CharField(max_length=50,null=False)
@@ -12,7 +14,6 @@ class Direccion(models.Model):
         
     def __str__(self):
         return self.calle + ' ' + self.numero + ', ' + self.comuna
-    
 
 class Usuario(models.Model):
     TIPO_USUARIO_ELECCIONES = (
@@ -20,17 +21,32 @@ class Usuario(models.Model):
         ('arrendatario', 'Arrendatario')
     )
     rut = models.CharField(max_length=10, unique=True,primary_key=True, null=False, blank=False)
-    Nombre_1 = models.CharField(max_length=50)
-    Nombre_2 = models.CharField(max_length=50)
-    Apellido_1 = models.CharField(max_length=50)
-    Apellido_2 = models.CharField(max_length=50)
+    nombre_1 = models.CharField(max_length=50)
+    nombre_2 = models.CharField(max_length=50)
+    apellido_1 = models.CharField(max_length=50)
+    apellido_2 = models.CharField(max_length=50)
     email = models.EmailField()
     telefono = models.CharField(max_length=9)
     tipo_usuario = models.CharField(max_length=20, choices=TIPO_USUARIO_ELECCIONES,default='Arrendatario')
     direccion = models.OneToOneField(Direccion, on_delete=models.DO_NOTHING, null=True, blank=True)
-        
+    password = models.CharField(max_length=50, null=False, blank=False)
+
+    groups = models.ManyToManyField(
+        Group,
+        verbose_name="Grupos",
+        blank=True,
+        help_text="Los grupos a los que pertenece este usuario. Un usuario obtendrá todos los permisos otorgados a cada uno de los grupos en los que se encuentra.",
+        related_name="usuario_groups"  # Nombre personalizado para la relación inversa
+    )
+    user_permissions = models.ManyToManyField(
+        Permission,
+        verbose_name="Permisos del usuario",
+        blank=True,
+        help_text="Permisos específicos para este usuario.",
+        related_name="usuario_permissions"  # Nombre personalizado para la relación inversa
+    )
     def __str__(self):
-        return self.Nombre_1 + ' ' + self.Apellido_1
+        return self.nombre_1 + ' ' + self.apellido_1
 
 class Inmueble(models.Model):
     nombre = models.CharField(max_length=50, null=False)

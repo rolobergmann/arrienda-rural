@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import ContactForm
+from .models import ContactForm, Usuario
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
@@ -11,13 +11,27 @@ class ContactFormModelForm(forms.ModelForm) :
         model = ContactForm
         fields = ['customer_email', 'customer_name', 'message']
         labels = {'customer_email' : 'Correo', 'customer_name' : 'Nombre', 'message' : 'Mensaje'}
-        widgets = {'customer_email' : forms.EmailInput(attrs={'placeholder': 'Correo'}), 'customer_name' : forms.TextInput(attrs={'placeholder': 'Tu nombre'}), 'message' : forms.Textarea(attrs={'placeholder': 'Mensaje'})}
+        widgets = {'customer_email' : forms.EmailInput(attrs={'placeholder': 'Correo'}),
+        'customer_name' : forms.TextInput(attrs={'placeholder': 'Tu nombre'}),
+        'message' : forms.Textarea(attrs={'placeholder': 'Mensaje'})}
 
 
-""" class UserForm(UserCreationForm):
-    first_name = forms.CharField()
-    last_name = forms.CharField()
-    email = forms.EmailField()
+class UserForm(forms.ModelForm):
     class Meta:
-        model = User
-        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2') """
+        model = Usuario
+        fields = (
+            'rut', 'nombre_1', 'nombre_2', 'apellido_1', 'apellido_2',
+            'email', 'telefono', 'tipo_usuario','password'
+        )
+        widgets = {
+            'rut': forms.TextInput, 'nombre_1': forms.TextInput, 'nombre_2': forms.TextInput,
+            'apellido_1': forms.TextInput, 'apellido_2': forms.TextInput,
+            'email': forms.EmailInput, 'telefono': forms.TextInput,
+            'tipo_usuario': forms.Select, 'password': forms.PasswordInput
+        }
+
+    # Si deseas, puedes añadir validación adicional, por ejemplo, para el campo rut:
+    def clean_rut(self):
+        rut = self.cleaned_data['rut']
+        # Implementar lógica de validación de RUT (dígito verificador, etc.)
+        return rut
