@@ -19,11 +19,11 @@ class ContactFormModelForm(forms.ModelForm) :
 class UserForm(forms.ModelForm):
     class Meta:
         model = Usuario
-        fields = (
+        fields = ('username',
             'rut', 'nombre_1', 'nombre_2', 'apellido_1', 'apellido_2',
             'email', 'telefono', 'tipo_usuario','password'
         )
-        widgets = {
+        widgets = {'username': forms.TextInput,
             'rut': forms.TextInput, 'nombre_1': forms.TextInput, 'nombre_2': forms.TextInput,
             'apellido_1': forms.TextInput, 'apellido_2': forms.TextInput,
             'email': forms.EmailInput, 'telefono': forms.TextInput,
