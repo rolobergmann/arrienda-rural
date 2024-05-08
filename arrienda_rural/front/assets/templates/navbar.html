@@ -1,49 +1,44 @@
-<div class="container">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-          <a class="navbar-brand" href="{% url 'index' %}">Arrienda Rural</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav me-auto">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Publicar</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Arrendar</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Sobre Nosotros</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'contacto' %}">Contacto</a>
-              </li>
-            </ul>
-            <form class="justify-content-start">
-              {% if request.user.is_authenticated %} {{ user.username | upper }}
-              ({{ user.email }})
-      
-              <a class="btn btn-dark" href="{% url 'logout' %}" role="button">
-                Logout
-              </a>
-            {% comment %}               
-              <form action="{% url 'logout' %}" method="POST">
-                  {% csrf_token %} 
-                  <button class="btn btn-dark" type="submit">Logout</button>
-            {% endcomment %}
+<div class="container-fluid">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'index' %}">Arrienda Rural</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Publicar</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Arrendar</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Sobre Nosotros</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'contacto' %}">Contacto</a>
+          </li>
+        </ul>
+        <form class="justify-content-start">
+          {% if request.user.is_authenticated %}
+            {{ user.username|upper }}
+            ({{ user.email }})
+
+            <a class="btn btn-dark" href="{% url 'exit' %}" role="button">Logout</a>
+            {% comment %}
+            <form action="{% url 'logout' %}" method="POST">
+              {% csrf_token %}
+              <button class="btn btn-dark" type="submit">Logout</button>
+              {% endcomment %}
             </form>
-              {% else %}
-              <a class="btn btn-dark" href="{% url 'login' %}" role="button">Login</a>
-              <a class="btn btn-dark" href="{% url 'registro' %}" role="button"
-                >Registrarse</a
-              >
-              {% endif %}
-            </form>
-          </div>
-        </div>
-      </nav>
+          {% else %}
+            <a class="btn btn-dark" href="{% url 'login' %}" role="button">Login</a>
+            <a class="btn btn-dark" href="{% url 'registro' %}" role="button">Registrarse</a>
+          {% endif %}
+        </form>
+      </div>
+    </div>
+  </nav>
 </div>

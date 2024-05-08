@@ -15,15 +15,14 @@
   <body>
 {% comment %}     <header class="container">{% include 'header.html' %}</header> {% endcomment %}
 
-    <navbar class="container">{% include 'navbar.html' %}</navbar>
+    <navbar class="container-fluid">{% include 'navbar.html' %}</navbar>
 
     <main class="container">{% block contenido %} {% endblock %}</main>
 
-    <footer class="container">{% include 'footer.html' %}</footer>
+    <footer class="container-fluid">{% include 'footer.html' %}</footer>
 
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/welcome.js' %}"></script>
   </body>
 </html>

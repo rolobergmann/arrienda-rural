@@ -1,15 +1,18 @@
-{% extends "base.html" %} {% block contenido %} 
-{% if not request.user.is_authenticated %}
-<div>
-  <form method="post">
-    {% csrf_token %} {{ form.as_p }}
-    <button type="submit">Register</button>
-  </form>
-  <p>ya tienes una cuenta? <a href="{% url 'login' %}">Ingresa</a></p>
-</div>
-{% else %}
-<p>
-  Ya tiene una cuenta y no se puede registrar, le gustaria
-  <a href="{% url 'logout' %}">salir</a>?
-</p>
-{% endif %} {% endblock contenido %}
+{% extends 'base.html' %} {% block contenido %}
+  {% if not request.user.is_authenticated %}
+    <div>
+      <form method="post">
+        {% csrf_token %} {{ form.as_p }}
+        <button type="submit">Register</button>
+      </form>
+      <p>
+        ya tienes una cuenta? <a href="{% url 'login' %}">Ingresa</a>
+      </p>
+    </div>
+  {% else %}
+    <p>
+      Ya tiene una cuenta y no se puede registrar, le gustaria
+      <a href="{% url 'logout' %}">salir</a>?
+    </p>
+  {% endif %}
+{% endblock %}
