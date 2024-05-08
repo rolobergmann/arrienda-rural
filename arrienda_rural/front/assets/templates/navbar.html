@@ -27,9 +27,14 @@
               {% if request.user.is_authenticated %} {{ user.username | upper }}
               ({{ user.email }})
       
+              <a class="btn btn-dark" href="{% url 'logout' %}" role="button">
+                Logout
+              </a>
+            {% comment %}               
               <form action="{% url 'logout' %}" method="POST">
-                {% csrf_token %} 
-                <button class="btn btn-dark" type="submit">Logout</button>
+                  {% csrf_token %} 
+                  <button class="btn btn-dark" type="submit">Logout</button>
+            {% endcomment %}
             </form>
               {% else %}
               <a class="btn btn-dark" href="{% url 'login' %}" role="button">Login</a>

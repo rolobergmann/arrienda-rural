@@ -9,11 +9,13 @@ from django.contrib.auth.forms import UserCreationForm
 class ContactFormModelForm(forms.ModelForm) :
     class Meta :
         model = ContactForm
-        fields = ['customer_email', 'customer_name', 'message']
-        labels = {'customer_email' : 'Correo', 'customer_name' : 'Nombre', 'message' : 'Mensaje'}
+        fields = ['customer_email', 'customer_name', 'message', 'rut']
+        labels = {'customer_email' : 'Correo', 'customer_name' : 'Nombre', 'message' : 'Mensaje', 'rut' : 'Rut'}
         widgets = {'customer_email' : forms.EmailInput(attrs={'placeholder': 'Correo'}),
         'customer_name' : forms.TextInput(attrs={'placeholder': 'Tu nombre'}),
-        'message' : forms.Textarea(attrs={'placeholder': 'Mensaje'})}
+        'message' : forms.Textarea(attrs={'placeholder': 'Mensaje'}),
+        'rut': forms.TextInput(attrs={'placeholder': 'Ej: 12345678-9 (opcional)', 'length': '12','null': True, 'blank': True})
+        }
 
 
 class UserForm(forms.ModelForm):

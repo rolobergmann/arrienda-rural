@@ -14,6 +14,34 @@ class Direccion(models.Model):
         
     def __str__(self):
         return self.calle + ' ' + self.numero + ', ' + self.comuna
+class Inmueble(models.Model):
+    TIPO_INMUEBLE_ELECCIONES = (
+        ('casa', 'Casa'), 
+        ('departamento', 'Departamento'),
+        ('parcela', 'Parcela')
+    )
+
+    ESTADO_INMUEBLE_ELECCIONES =(
+        ('disponible', 'Disponible'),
+        ('no disponible', 'No disponible')
+    )
+
+    nombre = models.CharField(max_length=50, null=False)
+    description = models.TextField(null=False)
+    m2_construidos = models.IntegerField(null=False)
+    m2_totales = models.IntegerField(null=False)
+    estacionamientos = models.IntegerField(null=False)
+    cantidad_habitaciones= models.IntegerField(null=False)
+    cantidad_banos = models.IntegerField(null=False)
+    tipo_de_inmueble = models.CharField(max_length=20, choices=TIPO_INMUEBLE_ELECCIONES,default='Casa')
+    precio_arriendo = models.IntegerField(null=False)
+    direccion = models.OneToOneField(Direccion, on_delete=models.DO_NOTHING, null=True)
+    estado = models.BooleanField(default=True, choices=ESTADO_INMUEBLE_ELECCIONES)
+
+
+        
+    def __str__(self):
+        return self.tipo_de_inmueble + ' ' + self.nombre + ' ' + str(self.precio_arriendo)
 
 class Usuario(models.Model):
     TIPO_USUARIO_ELECCIONES = (
@@ -36,6 +64,9 @@ class Usuario(models.Model):
     tipo_usuario = models.CharField(max_length=20, choices=TIPO_USUARIO_ELECCIONES,default='Arrendatario')
     direccion = models.OneToOneField(Direccion, on_delete=models.DO_NOTHING, null=True, blank=True)
     password = models.CharField(max_length=50, null=False, blank=False)
+    inmuebles =models.ForeignKey(Inmueble, on_delete=models.DO_NOTHING, null=True, blank=True)
+
+
 
     groups = models.ManyToManyField(
         Group,
@@ -53,30 +84,16 @@ class Usuario(models.Model):
     )
     def __str__(self):
         return self.nombre_1 + ' ' + self.apellido_1
-
-class Inmueble(models.Model):
-    nombre = models.CharField(max_length=50, null=False)
-    description = models.TextField(null=False)
-    m2_construidos = models.IntegerField(null=False)
-    m2_totales = models.IntegerField(null=False)
-    estacionamientos = models.IntegerField(null=False)
-    cantidad_habitaciones= models.IntegerField(null=False)
-    cantidad_banos = models.IntegerField(null=False)
-    tipo_de_inmueble = models.CharField(max_length=50, null=False)
-    precio_arriendo = models.IntegerField(null=False)
-    direccion = models.OneToOneField(Direccion, on_delete=models.DO_NOTHING, null=True)
-        
-    def __str__(self):
-        return self.tipo_de_inmueble + ' ' + self.nombre + ' ' + str(self.precio_arriendo)
-
-
 class ContactForm(models.Model) :
     contact_form_uuid = models.UUIDField(default=uuid.uuid4, editable=False)
     customer_email = models.EmailField()
     customer_name = models.CharField(max_length=64)
     message = models.TextField()
     date_sent = models.DateTimeField(auto_now_add=True)
+    rut = models.ForeignKey(Usuario, on_delete=models.DO_NOTHING, null=True, blank=True) # Campo RUT
 
 
     def __str__(self):
         return self.customer_name + ' ' + self.date_sent.strftime("%d/%m/%Y")
+
+

@@ -51,6 +51,6 @@ def registro(request):
     return render(request, "registration/register.html", {'form': form})
 
 
-def logout(request):
+""" def logout(request):
     logout(request)
-    return redirect('/loggedout')
+    return redirect('/loggedout') """
