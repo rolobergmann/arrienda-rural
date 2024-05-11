@@ -1,0 +1,62 @@
+
+**Vitacura**
+
+- Casa moderna en Vitacura: ...
+
+**Santiago**
+
+- Departamento amplio en Santiago: ...
+
+**Las Condes**
+
+- Inmueble 1: Descripción Inmueble 1
+
+**Providencia**
+
+- Inmueble 2: Descripción Inmueble 2
+- Inmueble 3: Descripción Inmueble 3
+
+**Vitacura**
+
+- Inmueble 4: Descripción Inmueble 4
+
+**Las Condes**
+
+- Inmueble 5: Descripción Inmueble 5
+- Inmueble 6: Descripción Inmueble 6
+
+**Vitacura**
+
+- Inmueble 7: Descripción Inmueble 7
+
+**Las Condes**
+
+- Inmueble 8: Descripción Inmueble 8
+
+**Vitacura**
+
+- Inmueble 9: Descripción Inmueble 9
+
+**Providencia**
+
+- Inmueble 10: Descripción Inmueble 10
+
+**Lo Barnechea**
+
+- Parcela en Farellones: Parcela con vista a la montaña
+
+**Puerto Varas**
+
+- Parcela en Puerto Varas: Parcela con vista al lago
+
+**Melipilla**
+
+- Parcela en Melipilla: Parcela en zona rural
+
+**Santo Domingo**
+
+- Parcela en Santo Domingo: Parcela cerca de la playa
+
+**Pucón**
+
+- Parcela en Pucón: Parcela con bosque nativo

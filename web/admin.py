@@ -24,10 +24,6 @@ class DateSentFilter(admin.SimpleListFilter):
         if self.value() == 'this_month':
             return queryset.filter(date_sent__year=today.year, date_sent__month=today.month)
 
-""" @admin.register(User) # Register the User model
-class UserAdmin(admin.ModelAdmin):
-    inlines = [ExtendUsuarioInline]  """
-
 class DireccionAdmin(admin.ModelAdmin):
     list_display = ('calle', 'numero', 'depto', 'get_comuna_nombre', 'get_region_nombre')
 

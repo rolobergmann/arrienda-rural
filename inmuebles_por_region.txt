@@ -1,0 +1,29 @@
+
+**Araucanía**
+
+- Parcela en Pucón: Parcela con bosque nativo (Pucón)
+
+**Los Lagos**
+
+- Parcela en Puerto Varas: Parcela con vista al lago (Puerto Varas)
+
+**Metropolitana de Santiago**
+
+- Casa moderna en Vitacura: ... (Vitacura)
+- Departamento amplio en Santiago: ... (Santiago)
+- Inmueble 1: Descripción Inmueble 1 (Las Condes)
+- Inmueble 2: Descripción Inmueble 2 (Providencia)
+- Inmueble 3: Descripción Inmueble 3 (Providencia)
+- Inmueble 4: Descripción Inmueble 4 (Vitacura)
+- Inmueble 5: Descripción Inmueble 5 (Las Condes)
+- Inmueble 6: Descripción Inmueble 6 (Las Condes)
+- Inmueble 7: Descripción Inmueble 7 (Vitacura)
+- Inmueble 8: Descripción Inmueble 8 (Las Condes)
+- Inmueble 9: Descripción Inmueble 9 (Vitacura)
+- Inmueble 10: Descripción Inmueble 10 (Providencia)
+- Parcela en Farellones: Parcela con vista a la montaña (Lo Barnechea)
+- Parcela en Melipilla: Parcela en zona rural (Melipilla)
+
+**Valparaíso**
+
+- Parcela en Santo Domingo: Parcela cerca de la playa (Santo Domingo)
