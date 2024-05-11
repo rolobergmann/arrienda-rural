@@ -27,7 +27,7 @@ class DateSentFilter(admin.SimpleListFilter):
 
 class DireccionAdmin(admin.ModelAdmin):
     list_display = ('calle', 'numero', 'depto', 'get_comuna_nombre', 'get_region_nombre')
-
+    
     def get_comuna_nombre(self, obj):
         return obj.comuna.nombre if obj.comuna else "-"
 
@@ -41,7 +41,7 @@ admin.site.register(Direccion, DireccionAdmin)
 class InmuebleAdmin(admin.ModelAdmin):
     list_display = ('nombre', 'description', 'm2_construidos', 'm2_totales', 'estacionamientos', 'cantidad_habitaciones', 'cantidad_banos', 'tipo_de_inmueble', 'precio_arriendo')
     search_fields = ('nombre','tipo_de_inmueble')
-    filter_fields = ('tipo_de_inmueble')
+    list_filter = ('tipo_de_inmueble','cantidad_habitaciones','cantidad_banos','estacionamientos')
 admin.site.register(Inmueble,InmuebleAdmin)
 
 class ContactFormAdmin(admin.ModelAdmin):
