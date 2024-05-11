@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 from .models import *
 from .models import ContactForm, ExtendUsuario, User
 import datetime
@@ -57,3 +58,9 @@ class ExtendUsuarioAdmin(admin.ModelAdmin):
 class ExtendUsuarioInline(admin.StackedInline): 
     model = ExtendUsuario 
     can_delete = False
+
+class CustomUserAdmin(UserAdmin):
+    inlines = (ExtendUsuarioInline,)
+
+admin.site.unregister(User)  # Unregister the default UserAdmin
+admin.site.register(User, CustomUserAdmin)  # Register your custom UserAdmin

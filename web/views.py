@@ -1,4 +1,4 @@
-from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import login, authenticate, logout, REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.hashers import make_password
@@ -8,7 +8,11 @@ from django.utils import timezone
 from django.views.generic import ListView
 
 from web.forms import ContactFormModelForm,RegistroForm
-from web.models import ContactForm, Inmueble, RegionesChile, ComunasChile
+from web.models import ContactForm, Inmueble, RegionesChile, ComunasChile, ExtendUsuario
+from django.views.generic import TemplateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.views import redirect_to_login
+
 
 class InmuebleListView(ListView):
     model = Inmueble
@@ -91,3 +95,36 @@ def registro(request):
 def exit(request):
     logout(request)
     return redirect("loggedout")
+
+class ArrendatarioAccountView(LoginRequiredMixin, TemplateView):
+    template_name = 'arrendatario_account.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user_profile'] = ExtendUsuario.objects.get(usuario=self.request.user)  # Assuming ExtendUsuario is your extended user model
+        # Add other relevant data for arrendatarios
+        return context
+
+class ArrendadorAccountView(LoginRequiredMixin, TemplateView):
+    template_name = 'arrendador_account.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user_profile'] = ExtendUsuario.objects.get(usuario=self.request.user)  
+        # Add other relevant data for arrendadores
+        return context
+@login_required 
+def user_redirect_view(request):
+    if not request.user.is_authenticated:
+        return redirect_to_login(request.get_full_path(), login_url='/accounts/login/', redirect_field_name=REDIRECT_FIELD_NAME)
+
+    try:
+        user_profile = ExtendUsuario.objects.get(usuario=request.user)
+        if user_profile.tipo_usuario == 'arrendador':
+            return redirect('arrendador_account')  
+        elif user_profile.tipo_usuario == 'arrendatario':
+            return redirect('arrendatario_account')
+        else:
+            return redirect('index')
+    except ExtendUsuario.DoesNotExist:
+        return redirect('index')
