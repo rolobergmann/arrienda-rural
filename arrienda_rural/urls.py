@@ -28,6 +28,7 @@ urlpatterns = [
     path("registro", web_views.registro, name="registro"),
     path("loggedout", web_views.loggedout, name="loggedout"),
     path("logout/", web_views.exit, name="exit"),
+    path('arrendar', web_views.InmuebleListView.as_view(), name='arrendar')
 ]
 
 urlpatterns += [

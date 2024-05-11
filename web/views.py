@@ -5,10 +5,38 @@ from django.contrib.auth.hashers import make_password
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.utils import timezone
+from django.views.generic import ListView
 
 from web.forms import ContactFormModelForm,RegistroForm
-from web.models import ContactForm
+from web.models import ContactForm, Inmueble, RegionesChile, ComunasChile
 
+class InmuebleListView(ListView):
+    model = Inmueble
+    template_name = 'inmueble_list.html'  # Create this template
+    context_object_name = 'inmuebles'
+
+    def get_queryset(self):
+        queryset = Inmueble.objects.all()
+
+        region_id = self.request.GET.get('region')
+        if region_id:
+            queryset = queryset.filter(direccion__comuna__region_id=region_id)
+
+        comuna_id = self.request.GET.get('comuna')
+        if comuna_id:
+            queryset = queryset.filter(direccion__comuna_id=comuna_id)
+
+        tipo_de_inmueble = self.request.GET.get('tipo_de_inmueble')
+        if tipo_de_inmueble:
+            queryset = queryset.filter(tipo_de_inmueble=tipo_de_inmueble)
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['regiones'] = RegionesChile.objects.all()  # Add regions for the filter
+        context['tipos_de_inmueble'] = Inmueble.TIPO_INMUEBLE_ELECCIONES  # Add tipos de inmueble
+        return context
 
 def index(request):
     return render(request, "index.html")

@@ -12,7 +12,7 @@
             <a class="nav-link" href="#">Publicar</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Arrendar</a>
+            <a class="nav-link" href="{% url 'arrendar' %}">Arrendar</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Sobre Nosotros</a>
@@ -26,7 +26,7 @@
             {{ user.username|upper }}
             ({{ user.email }})
 
-            <a class="btn btn-dark" href="{% url 'logout' %}" role="button">Logout</a>
+            <a class="btn btn-dark" href="{% url 'exit' %}" role="button">Logout</a>
             {% comment %}
             <form action="{% url 'logout' %}" method="POST">
               {% csrf_token %}

@@ -7,19 +7,26 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
   </head>
   <body>
-{% comment %}     <header class="container">{% include 'header.html' %}</header> {% endcomment %}
+    {% comment %} <header class="container">
+      {% include 'header.html' %}
+    </header> {% endcomment %}
 
-    <navbar class="container-fluid">{% include 'navbar.html' %}</navbar>
+    <navbar class="container-fluid">
+      {% include 'navbar.html' %}
+    </navbar>
 
-    <main class="container">{% block contenido %} {% endblock %}</main>
+    <main class="container">
+      {% block contenido %}
 
-    <footer class="container-fluid">{% include 'footer.html' %}</footer>
+      {% endblock %}
+    </main>
+
+    <footer class="container-fluid">
+      {% include 'footer.html' %}
+    </footer>
 
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
