@@ -1,4 +1,4 @@
-from django.contrib.auth import logout
+from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.hashers import make_password
@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.utils import timezone
 
-from web.forms import ContactFormModelForm, UserForm
+from web.forms import ContactFormModelForm,RegistroForm
 from web.models import ContactForm
 
 
@@ -45,15 +45,18 @@ def contacto(request):
 
 def registro(request):
     if request.method == "POST":
-        form = UserForm(request.POST)
+        form = RegistroForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
-            user.password = make_password(user.password)
-            user.date_joined = timezone.now()  # Establece la fecha y hora actual
-            user.save()
-            return redirect("/")
+            nuevo_usuario = form.save()
+            # Autentificar al usuario recién creado
+            usuario_autenticado = authenticate(username=nuevo_usuario.username, password=form.cleaned_data['password1'])
+            if usuario_autenticado:
+                login(request, usuario_autenticado)
+                return redirect("/")
+            else:
+                return render(request, "registration/register.html", {"form": form, "mensaje_error": "Error al iniciar sesión"})
     else:
-        form = UserForm()
+        form = RegistroForm()
     return render(request, "registration/register.html", {"form": form})
 
 

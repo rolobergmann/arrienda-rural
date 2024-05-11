@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import *
-from .models import ContactForm
+from .models import ContactForm, ExtendUsuario, User
 import datetime
 
 class DateSentFilter(admin.SimpleListFilter):
@@ -24,25 +24,22 @@ class DateSentFilter(admin.SimpleListFilter):
         if self.value() == 'this_month':
             return queryset.filter(date_sent__year=today.year, date_sent__month=today.month)
 
-# Register your models here.
-class UsuarioAdmin(admin.ModelAdmin):
-    list_display = ('rut', 'nombre_1', 'nombre_2', 'apellido_1', 'apellido_2',
-                    'email', 'telefono', 'tipo_usuario', 'direccion')
-    search_fields = ('rut','Apellido_1')
-    filter_fields = ('tipo_usuario')
+""" @admin.register(User) # Register the User model
+class UserAdmin(admin.ModelAdmin):
+    inlines = [ExtendUsuarioInline]  """
 
-    def get_direccion(self, obj):
-        if obj.direccion:
-            address_template = "{calle} {numero}, {depto}. {comuna}, {ciudad}, Región de {region}"
-            return address_template.format(**obj.direccion.__dict__) 
-        return '-'
-    
-admin.site.register(Usuario,UsuarioAdmin)
 class DireccionAdmin(admin.ModelAdmin):
-    list_display = ('calle', 'numero', 'depto', 'comuna', 'ciudad', 'region')
-    filter_fields = ('region','ciudad','comuna')
-    
-admin.site.register(Direccion,DireccionAdmin)
+    list_display = ('calle', 'numero', 'depto', 'get_comuna_nombre', 'get_region_nombre')
+
+    def get_comuna_nombre(self, obj):
+        return obj.comuna.nombre if obj.comuna else "-"
+
+    def get_region_nombre(self, obj):
+        return obj.comuna.region.nombre if obj.comuna else "-"
+
+    get_comuna_nombre.short_description = 'Comuna'
+    get_region_nombre.short_description = 'Region'
+admin.site.register(Direccion, DireccionAdmin)
 
 class InmuebleAdmin(admin.ModelAdmin):
     list_display = ('nombre', 'description', 'm2_construidos', 'm2_totales', 'estacionamientos', 'cantidad_habitaciones', 'cantidad_banos', 'tipo_de_inmueble', 'precio_arriendo')
@@ -55,3 +52,12 @@ class ContactFormAdmin(admin.ModelAdmin):
     search_fields =('rut','customer_email')
     list_filter = (DateSentFilter, 'customer_email')
 admin.site.register(ContactForm,ContactFormAdmin)
+
+class ExtendUsuarioAdmin(admin.ModelAdmin):
+    list_display = ('rut', 'nombre_1', 'apellido_1', 'tipo_usuario', 'telefono')  # Fields to display in the admin list view
+    list_filter = ('tipo_usuario',)  # Fields to add filters on the admin list view
+    search_fields = ('username', 'rut', 'nombre_1', 'apellido_1')  # Fields to search in the admin list view
+
+class ExtendUsuarioInline(admin.StackedInline): 
+    model = ExtendUsuario 
+    can_delete = False
