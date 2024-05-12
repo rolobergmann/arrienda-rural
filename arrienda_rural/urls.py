@@ -32,6 +32,8 @@ urlpatterns = [
     path('account/', web_views.user_redirect_view, name='user_redirect'),
     path('account/arrendatario/', web_views.ArrendatarioAccountView.as_view(), name='arrendatario_account'),
     path('account/arrendador/', web_views.ArrendadorAccountView.as_view(), name='arrendador_account'),
+    path('account/arrendatario/editar/<str:pk>/', web_views.ArrendatarioUpdateView.as_view(), name='arrendatario_update'),
+    path('account/arrendador/editar/<str:pk>/', web_views.ArrendadorUpdateView.as_view(), name='arrendador_update'),
 ]
 
 urlpatterns += [

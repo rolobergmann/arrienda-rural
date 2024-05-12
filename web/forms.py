@@ -34,3 +34,8 @@ class RegistroForm(UserCreationForm):
         fields = UserCreationForm.Meta.fields + ('rut', 'nombre_1', 'nombre_2', 'apellido_1', 'apellido_2', 'telefono', 'tipo_usuario')
 
 #ExtendUsuarioFormSet = inlineformset_factory(User, ExtendUsuario, fields=('rut', 'nombre_1', 'nombre_2', 'apellido_1', 'apellido_2', 'telefono', 'tipo_usuario'), can_delete=False)
+
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = ExtendUsuario
+        fields = ['nombre_1', 'nombre_2', 'apellido_1', 'apellido_2', 'telefono'] # Choose the fields you want users to edit

@@ -1,68 +1,54 @@
-<h1>Inmuebles</h1>
+{% extends 'base.html' %} {% load static %} {% block contenido %}
+  <h1>Inmuebles</h1>
 
-<form method="get">
-  <label for="region">Region:</label>
-  <select name="region" id="id_region">
-    <option value="">----</option>
-    <!-- Empezamos el bucle de regiones -->
-    {% for region in regiones %}
-      <!-- Este bloque de código Python verifica si la región actual coincide con la región seleccionada -->
-      {% set selected_region = '' %}
-      {% if region.id == request.GET.region %}
-        {% set selected_region = 'selected' %}
-      {% endif %}
-      <!-- Fin del bloque de código Python -->
-      <option value="{{ region.id }}" {{ selected_region }}>{{ region.nombre }}</option>
-    {% endfor %}
-    <!-- Fin del bucle de regiones -->
-  </select>
-
-  <label for="comuna">Comuna:</label>
-  <select name="comuna" id="id_comuna">
-    <option value="">----</option>
-    <!-- Empezamos la verificación de la región seleccionada -->
-    {% if request.GET.region %}
+  <form method="get">
+    <label for="region">Region:</label>
+    <select name="region" id="id_region">
       <option value="">----</option>
-      <!-- Empezamos el bucle de comunas -->
-      {% for comuna in comunas %}
-        <!-- Este bloque de código Python verifica si la comuna actual coincide con la comuna seleccionada -->
-        {% set selected_comuna = '' %}
-        {% if comuna.id == request.GET.comuna %}
-          {% set selected_comuna = 'selected' %}
-        {% endif %}
-        <!-- Fin del bloque de código Python -->
-        <option value="{{ comuna.id }}" {{ selected_comuna }}>{{ comuna.nombre }}</option>
+      <!-- Empezamos el bucle de regiones -->
+      {% for region in regiones %}
+        <option value="{{ region.id }}">{{ region.nombre }}</option>
       {% endfor %}
-      <!-- Fin del bucle de comunas -->
-    {% endif %}
-    <!-- Fin de la verificación de la región seleccionada -->
-  </select>
+      <!-- Fin del bucle de regiones -->
+    </select>
 
-  <label for="tipo_de_inmueble">Tipo de Inmueble:</label>
-  <select name="tipo_de_inmueble" id="id_tipo_de_inmueble">
-    <option value="">----</option>
-    <!-- Empezamos el bucle de tipos de inmueble -->
-    {% for value, label in tipos_de_inmueble %}
-      <!-- Este bloque de código Python verifica si el tipo de inmueble actual coincide con el tipo de inmueble seleccionado -->
-      {% set selected_tipo = '' %}
-      {% if value == request.GET.tipo_de_inmueble %}
-        {% set selected_tipo = 'selected' %}
+    {% comment %} <label for="comuna">Comuna:</label>
+    <select name="comuna" id="id_comuna">
+      <option value="">----</option>
+      <!-- Verificamos si se ha seleccionado una región -->
+      {% if request.GET.region %}
+        <!-- Empezamos el bucle de comunas correspondientes a la región seleccionada -->
+        {% for comuna in comunas %}
+          <!-- Verificamos si la comuna pertenece a la región seleccionada -->
+          {% if comuna.region_id == request.GET.region %}
+            <option value="{{ comuna.id }}">{{ comuna.nombre }}</option>
+          {% endif %}
+        {% endfor %}
+        <!-- Fin del bucle de comunas -->
       {% endif %}
-      <!-- Fin del bloque de código Python -->
-      <option value="{{ value }}" {{ selected_tipo }}>{{ label }}</option>
+      <!-- Fin de la verificación de la región seleccionada -->
+    </select> {% endcomment %}
+
+    <label for="tipo_de_inmueble">Tipo de Inmueble:</label>
+    <select name="tipo_de_inmueble" id="id_tipo_de_inmueble">
+      <option value="">----</option>
+      <!-- Empezamos el bucle de tipos de inmueble -->
+      {% for value, label in tipos_de_inmueble %}
+        <option value="{{ value }}">{{ label }}</option>
+      {% endfor %}
+      <!-- Fin del bucle de tipos de inmueble -->
+    </select>
+
+    <button type="submit">Filtrar</button>
+  </form>
+
+  <ul>
+    <!-- Empezamos el bucle de inmuebles -->
+    {% for inmueble in inmuebles %}
+      <li>{{ inmueble.nombre }} - {{ inmueble.description }} - {{ inmueble.direccion.comuna }}</li>
+    {% empty %}
+      <li>No se encontraron inmuebles.</li>
     {% endfor %}
-    <!-- Fin del bucle de tipos de inmueble -->
-  </select>
-
-  <button type="submit">Filtrar</button>
-</form>
-
-<ul>
-  <!-- Empezamos el bucle de inmuebles -->
-  {% for inmueble in inmuebles %}
-    <li>{{ inmueble.nombre }} - {{ inmueble.description }}</li>
-  {% empty %}
-    <li>No se encontraron inmuebles.</li>
-  {% endfor %}
-  <!-- Fin del bucle de inmuebles -->
-</ul>
+    <!-- Fin del bucle de inmuebles -->
+  </ul>
+{% endblock %}

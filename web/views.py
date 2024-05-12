@@ -7,12 +7,12 @@ from django.shortcuts import redirect, render
 from django.utils import timezone
 from django.views.generic import ListView
 
-from web.forms import ContactFormModelForm,RegistroForm
+from web.forms import ContactFormModelForm,RegistroForm, UserUpdateForm
 from web.models import ContactForm, Inmueble, RegionesChile, ComunasChile, ExtendUsuario
 from django.views.generic import TemplateView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin  
 from django.contrib.auth.views import redirect_to_login
-
+from django.views.generic.edit import UpdateView
 
 class InmuebleListView(ListView):
     model = Inmueble
@@ -128,3 +128,23 @@ def user_redirect_view(request):
             return redirect('index')
     except ExtendUsuario.DoesNotExist:
         return redirect('index')
+    
+class ArrendatarioUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = ExtendUsuario
+    form_class = UserUpdateForm  # Create this form (see below)
+    template_name = 'arrendatario_update.html'  # Create this template
+    success_url = '/account/arrendatario/'  # Redirect after successful update
+
+    def test_func(self):  # UserPassesTestMixin check
+        profile = self.get_object()
+        return profile.usuario == self.request.user and profile.tipo_usuario == 'arrendatario'
+
+class ArrendadorUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = ExtendUsuario
+    form_class = UserUpdateForm
+    template_name = 'arrendador_update.html'
+    success_url = '/account/arrendador/'
+
+    def test_func(self):
+        profile = self.get_object()
+        return profile.usuario == self.request.user and profile.tipo_usuario == 'arrendador'
