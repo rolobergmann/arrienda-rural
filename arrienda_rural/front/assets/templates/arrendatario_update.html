@@ -1,6 +1,5 @@
 {% extends 'base.html' %} {% load static %} {% block contenido %}
   {% block content %}
-    <a href="{% url 'arrendatario_update' user_profile.rut %}">Editar Perfil</a>
     <h2>Editar Perfil de Arrendatario</h2>
     <form method="post">
       {% csrf_token %}

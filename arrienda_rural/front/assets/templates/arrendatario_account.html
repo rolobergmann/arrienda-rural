@@ -1,5 +1,6 @@
 {% extends 'base.html' %} {% load static %} {% block contenido %}
   {% block content %}
+    <a href="{% url 'arrendatario_update' user_profile.rut %}">Editar Perfil</a>
     <h2>Perfil de Arrendatario</h2>
     <p>Nombre: {{ user_profile.nombre_1 }} {{ prouser_profilefile.apellido_1 }}</p>
     <p>RUT: {{ user_profile.rut }}</p>
