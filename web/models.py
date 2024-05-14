@@ -29,11 +29,6 @@ class Inmueble(models.Model):
         ('parcela', 'Parcela')
     )
 
-    ESTADO_INMUEBLE_ELECCIONES =(
-        ('disponible', 'Disponible'),
-        ('no disponible', 'No disponible')
-    )
-
     nombre = models.CharField(max_length=50, null=False)
     description = models.TextField(null=False)
     m2_construidos = models.IntegerField(null=False)
@@ -44,7 +39,11 @@ class Inmueble(models.Model):
     tipo_de_inmueble = models.CharField(max_length=20, choices=TIPO_INMUEBLE_ELECCIONES,default='Casa')
     precio_arriendo = models.IntegerField(null=False)
     direccion = models.OneToOneField(Direccion, on_delete=models.DO_NOTHING, null=True)
-    estado = models.BooleanField(default=True, choices=ESTADO_INMUEBLE_ELECCIONES)
+    estado = models.BooleanField(default=False, choices=(
+        (True, 'Disponible'),
+        (False, 'No disponible')
+    ))
+    imagenes = models.ImageField(upload_to='media/inmuebles/', null=True, blank=True)
 
 
         

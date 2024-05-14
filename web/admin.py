@@ -39,7 +39,7 @@ class DireccionAdmin(admin.ModelAdmin):
 admin.site.register(Direccion, DireccionAdmin)
 
 class InmuebleAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'description', 'm2_construidos', 'm2_totales', 'estacionamientos', 'cantidad_habitaciones', 'cantidad_banos', 'tipo_de_inmueble', 'precio_arriendo')
+    list_display = ('nombre', 'description', 'm2_construidos', 'm2_totales', 'estacionamientos', 'cantidad_habitaciones', 'cantidad_banos', 'tipo_de_inmueble', 'precio_arriendo','imagenes')
     search_fields = ('nombre','tipo_de_inmueble')
     list_filter = ('tipo_de_inmueble','cantidad_habitaciones','cantidad_banos','estacionamientos')
 admin.site.register(Inmueble,InmuebleAdmin)

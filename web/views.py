@@ -1,9 +1,7 @@
 from django.contrib.auth import login, authenticate, logout, REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.hashers import make_password
 from django.http import HttpResponseRedirect
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.utils import timezone
 from django.views.generic import ListView
 
@@ -14,7 +12,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.views import redirect_to_login
 from django.views.generic.edit import UpdateView
 
-class InmuebleListView(ListView):
+class ArrendarListView(ListView):
     model = Inmueble
     template_name = 'inmueble_list.html'  # Create this template
     context_object_name = 'inmuebles'
@@ -33,6 +31,13 @@ class InmuebleListView(ListView):
         tipo_de_inmueble = self.request.GET.get('tipo_de_inmueble')
         if tipo_de_inmueble:
             queryset = queryset.filter(tipo_de_inmueble=tipo_de_inmueble)
+        
+        imagenes = self.request.GET.get('imagenes')
+        if imagenes == 'Not Null':
+            queryset = queryset.exclude(imagenes__isnull=True)
+        elif imagenes == 'Null':
+            queryset = queryset.filter(imagenes__isnull=True)
+
 
         return queryset
 
@@ -40,6 +45,7 @@ class InmuebleListView(ListView):
         context = super().get_context_data(**kwargs)
         context['regiones'] = RegionesChile.objects.all()  # Add regions for the filter
         context['tipos_de_inmueble'] = Inmueble.TIPO_INMUEBLE_ELECCIONES  # Add tipos de inmueble
+        context['selected_imagenes'] = self.request.GET.get('imagenes', '')
         return context
 
 def index(request):
@@ -48,6 +54,7 @@ def index(request):
 
 def exito(request):
     return render(request, "exito.html")
+
 
 def loggedout(request):
     return render(request, "registration/logged_out.html")
@@ -148,3 +155,7 @@ class ArrendadorUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def test_func(self):
         profile = self.get_object()
         return profile.usuario == self.request.user and profile.tipo_usuario == 'arrendador'
+        
+def inmueble_view(request, pk):
+    inmueble = get_object_or_404(Inmueble, pk=pk)
+    return render(request, 'inmueble_view.html', {'inmueble': inmueble})

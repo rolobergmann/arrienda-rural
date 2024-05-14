@@ -11,6 +11,7 @@ html-void-elements==0.1.0
 jsbeautifier==1.15.1
 json5==0.9.25
 pathspec==0.12.1
+pillow==10.3.0
 psycopg2==2.9.9
 PyYAML==6.0.1
 regex==2023.12.25

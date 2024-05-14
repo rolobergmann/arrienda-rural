@@ -1,0 +1,49 @@
+{% extends 'base.html' %} {% load static %}
+
+{% block contenido %}
+  <div class="container mt-5">
+    <div class="card">
+      <div class="card-header">
+        <h2>{{ inmueble.nombre }}</h2>
+      </div>
+      <div class="card-body">
+        {% if inmueble.imagenes %}
+          <img src="{% static 'media/inmuebles/casa1-1024x1024.jpg' %}" class="img-fluid mb-3" alt="Imagen del inmueble" />
+        {% endif %}
+        <p class="card-text">
+          <strong>Descripción:</strong> {{ inmueble.description }}
+        </p>
+        <p class="card-text">
+          <strong>Metros Construidos:</strong> {{ inmueble.m2_construidos }} m²
+        </p>
+        <p class="card-text">
+          <strong>Metros Totales:</strong> {{ inmueble.m2_totales }} m²
+        </p>
+        <p class="card-text">
+          <strong>Estacionamientos:</strong> {{ inmueble.estacionamientos }}
+        </p>
+        <p class="card-text">
+          <strong>Habitaciones:</strong> {{ inmueble.cantidad_habitaciones }}
+        </p>
+        <p class="card-text">
+          <strong>Baños:</strong> {{ inmueble.cantidad_banos }}
+        </p>
+        <p class="card-text">
+          <strong>Tipo de Inmueble:</strong> {{ inmueble.get_tipo_de_inmueble_display }}
+        </p>
+        <p class="card-text">
+          <strong>Precio de Arriendo:</strong> ${{ inmueble.precio_arriendo }}
+        </p>
+        <p class="card-text">
+          <strong>Dirección:</strong> {{ inmueble.direccion }}
+        </p>
+        <p class="card-text">
+          <strong>Estado:</strong> {{ inmueble.get_estado_display }}
+        </p>
+      </div>
+      <div class="card-footer text-muted">
+        <a href="{% url 'arrendar' %}" class="btn btn-primary">Volver a la lista de inmuebles</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}

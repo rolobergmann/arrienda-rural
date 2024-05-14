@@ -1,54 +1,66 @@
 {% extends 'base.html' %} {% load static %} {% block contenido %}
   <h1>Inmuebles</h1>
 
-  <form method="get">
-    <label for="region">Region:</label>
+  <form method="get" id="filter-form">
+    <label for="region">Región:</label>
     <select name="region" id="id_region">
       <option value="">----</option>
-      <!-- Empezamos el bucle de regiones -->
       {% for region in regiones %}
         <option value="{{ region.id }}">{{ region.nombre }}</option>
       {% endfor %}
-      <!-- Fin del bucle de regiones -->
     </select>
-
-    {% comment %} <label for="comuna">Comuna:</label>
-    <select name="comuna" id="id_comuna">
-      <option value="">----</option>
-      <!-- Verificamos si se ha seleccionado una región -->
-      {% if request.GET.region %}
-        <!-- Empezamos el bucle de comunas correspondientes a la región seleccionada -->
-        {% for comuna in comunas %}
-          <!-- Verificamos si la comuna pertenece a la región seleccionada -->
-          {% if comuna.region_id == request.GET.region %}
-            <option value="{{ comuna.id }}">{{ comuna.nombre }}</option>
-          {% endif %}
-        {% endfor %}
-        <!-- Fin del bucle de comunas -->
-      {% endif %}
-      <!-- Fin de la verificación de la región seleccionada -->
-    </select> {% endcomment %}
 
     <label for="tipo_de_inmueble">Tipo de Inmueble:</label>
     <select name="tipo_de_inmueble" id="id_tipo_de_inmueble">
       <option value="">----</option>
-      <!-- Empezamos el bucle de tipos de inmueble -->
       {% for value, label in tipos_de_inmueble %}
         <option value="{{ value }}">{{ label }}</option>
       {% endfor %}
-      <!-- Fin del bucle de tipos de inmueble -->
     </select>
 
-    <button type="submit">Filtrar</button>
+    <label for="imagenes">Contiene Imágenes:</label>
+    <select name="imagenes" id="id_imagenes">
+      <option value="">----</option>
+      <option value="Not Null">Si</option>
+      <option value="Null">No</option>
+    </select>
   </form>
 
   <ul>
-    <!-- Empezamos el bucle de inmuebles -->
     {% for inmueble in inmuebles %}
       <li>{{ inmueble.nombre }} - {{ inmueble.description }} - {{ inmueble.direccion.comuna }}</li>
+      <a href="{% url 'vista_inmueble' inmueble.id %}">Ver</a>
     {% empty %}
       <li>No se encontraron inmuebles.</li>
     {% endfor %}
-    <!-- Fin del bucle de inmuebles -->
   </ul>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('filter-form')
+      const regionSelect = document.getElementById('id_region')
+      const tipoInmuebleSelect = document.getElementById('id_tipo_de_inmueble')
+      const imagenesSelect = document.getElementById('id_imagenes')
+    
+      function applyFilters() {
+        form.submit()
+      }
+    
+      regionSelect.addEventListener('change', applyFilters)
+      tipoInmuebleSelect.addEventListener('change', applyFilters)
+      imagenesSelect.addEventListener('change', applyFilters)
+    
+      // Set the initial values from the URL parameters
+      const urlParams = new URLSearchParams(window.location.search)
+      if (urlParams.has('region')) {
+        regionSelect.value = urlParams.get('region')
+      }
+      if (urlParams.has('tipo_de_inmueble')) {
+        tipoInmuebleSelect.value = urlParams.get('tipo_de_inmueble')
+      }
+      if (urlParams.has('imagenes')) {
+        imagenesSelect.value = urlParams.get('imagenes')
+      }
+    })
+  </script>
 {% endblock %}

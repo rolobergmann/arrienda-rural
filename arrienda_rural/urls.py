@@ -28,12 +28,13 @@ urlpatterns = [
     path("registro", web_views.registro, name="registro"),
     path("loggedout", web_views.loggedout, name="loggedout"),
     path("logout/", web_views.exit, name="exit"),
-    path('arrendar', web_views.InmuebleListView.as_view(), name='arrendar'),
+    path('arrendar', web_views.ArrendarListView.as_view(), name='arrendar'),
     path('account/', web_views.user_redirect_view, name='user_redirect'),
     path('account/arrendatario/', web_views.ArrendatarioAccountView.as_view(), name='arrendatario_account'),
     path('account/arrendador/', web_views.ArrendadorAccountView.as_view(), name='arrendador_account'),
     path('account/arrendatario/editar/<str:pk>/', web_views.ArrendatarioUpdateView.as_view(), name='arrendatario_update'),
     path('account/arrendador/editar/<str:pk>/', web_views.ArrendadorUpdateView.as_view(), name='arrendador_update'),
+    path('vista_inmueble/<str:pk>/', web_views.inmueble_view, name='vista_inmueble'),
 ]
 
 urlpatterns += [
