@@ -4,7 +4,8 @@ from .models import ContactForm, ExtendUsuario
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.forms import inlineformset_factory
-
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # Create the form class.
 
@@ -21,7 +22,8 @@ class ContactFormModelForm(forms.ModelForm) :
 
 class RegistroForm(UserCreationForm):
     # Add your ExtendUsuario fields here
-    rut = forms.CharField(label="RUT", max_length=10)
+    rut = forms.CharField(label="RUT", max_length=50)
+    email = forms.EmailField(label="Correo Electrónico")
     nombre_1 = forms.CharField(label="Primer Nombre", max_length=50)
     nombre_2 = forms.CharField(label="Segundo Nombre", max_length=50, required=False)  # Optional
     apellido_1 = forms.CharField(label="Primer Apellido", max_length=50)
@@ -31,11 +33,11 @@ class RegistroForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = UserCreationForm.Meta.fields + ('rut', 'nombre_1', 'nombre_2', 'apellido_1', 'apellido_2', 'telefono', 'tipo_usuario')
+        fields = UserCreationForm.Meta.fields + ('rut', 'email','nombre_1', 'nombre_2', 'apellido_1', 'apellido_2', 'telefono', 'tipo_usuario')
 
 #ExtendUsuarioFormSet = inlineformset_factory(User, ExtendUsuario, fields=('rut', 'nombre_1', 'nombre_2', 'apellido_1', 'apellido_2', 'telefono', 'tipo_usuario'), can_delete=False)
 
 class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = ExtendUsuario
-        fields = ['nombre_1', 'nombre_2', 'apellido_1', 'apellido_2', 'telefono'] # Choose the fields you want users to edit
+        fields = ['nombre_1', 'nombre_2', 'apellido_1', 'apellido_2', 'telefono'] 

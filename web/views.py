@@ -11,6 +11,9 @@ from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin  
 from django.contrib.auth.views import redirect_to_login
 from django.views.generic.edit import UpdateView
+from django.contrib import messages
+from django.urls import reverse_lazy, reverse
+from django.core.exceptions import PermissionDenied
 
 class ArrendarListView(ListView):
     model = Inmueble
@@ -138,23 +141,42 @@ def user_redirect_view(request):
     
 class ArrendatarioUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = ExtendUsuario
-    form_class = UserUpdateForm  # Create this form (see below)
-    template_name = 'arrendatario_update.html'  # Create this template
-    success_url = '/account/arrendatario/'  # Redirect after successful update
+    form_class = UserUpdateForm
+    template_name = 'arrendatario_update.html'
 
-    def test_func(self):  # UserPassesTestMixin check
+    def test_func(self):
         profile = self.get_object()
-        return profile.usuario == self.request.user and profile.tipo_usuario == 'arrendatario'
+        if profile.usuario == self.request.user and profile.tipo_usuario == 'arrendatario':
+            return True
+        else:
+            raise PermissionDenied("No tienes permiso para editar este perfil.")
+    
+    def form_valid(self, form):
+        messages.success(self.request, '¡Tus datos han sido guardados exitosamente!')
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('arrendatario_account')
+    
 
 class ArrendadorUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = ExtendUsuario
     form_class = UserUpdateForm
     template_name = 'arrendador_update.html'
-    success_url = '/account/arrendador/'
 
     def test_func(self):
         profile = self.get_object()
-        return profile.usuario == self.request.user and profile.tipo_usuario == 'arrendador'
+        if profile.usuario == self.request.user and profile.tipo_usuario == 'arrendador':
+            return True
+        else:
+            raise PermissionDenied("No tienes permiso para editar este perfil.")
+    
+    def form_valid(self, form):
+        messages.success(self.request, '¡Tus datos de arrendador han sido guardados exitosamente!')
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('arrendador_account')
         
 def inmueble_view(request, pk):
     inmueble = get_object_or_404(Inmueble, pk=pk)
