@@ -44,6 +44,8 @@ class Inmueble(models.Model):
         (False, 'No disponible')
     ))
     imagenes = models.ImageField(upload_to='media/inmuebles/', null=True, blank=True)
+    destacado = models.BooleanField(default=False)
+    disponible = models.BooleanField(default=True)
 
 
         

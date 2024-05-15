@@ -17,7 +17,7 @@ from django.core.exceptions import PermissionDenied
 
 class ArrendarListView(ListView):
     model = Inmueble
-    template_name = 'inmueble_list.html'  # Create this template
+    template_name = 'inmueble_list.html'
     context_object_name = 'inmuebles'
 
     def get_queryset(self):
@@ -51,9 +51,10 @@ class ArrendarListView(ListView):
         context['selected_imagenes'] = self.request.GET.get('imagenes', '')
         return context
 
-def index(request):
-    return render(request, "index.html")
 
+def index(request):
+    inmuebles_destacados = Inmueble.objects.filter(destacado=True, disponible=True)
+    return render(request, 'index.html', {'inmuebles_destacados': inmuebles_destacados}) 
 
 def exito(request):
     return render(request, "exito.html")
