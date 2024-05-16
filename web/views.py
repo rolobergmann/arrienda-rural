@@ -59,6 +59,9 @@ def index(request):
 def exito(request):
     return render(request, "exito.html")
 
+def arrendar(request):
+    return render(request, "arrendar.html")
+
 
 def loggedout(request):
     return render(request, "registration/logged_out.html")
@@ -182,3 +185,29 @@ class ArrendadorUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 def inmueble_view(request, pk):
     inmueble = get_object_or_404(Inmueble, pk=pk)
     return render(request, 'inmueble_view.html', {'inmueble': inmueble})
+
+def confirmar_arriendo(request, inmueble_id):
+    inmueble = get_object_or_404(Inmueble, id=inmueble_id)
+    usuario_extendido = ExtendUsuario.objects.get(usuario=request.user)  # Obtener el perfil del usuario extendido
+
+    if usuario_extendido.tipo_usuario == 'arrendatario':
+        if usuario_extendido.inmuebles_arrendados.filter(id=inmueble_id).exists():
+            messages.error(request, "Ya has arrendado este inmueble.")
+        else:
+            usuario_extendido.inmuebles_arrendados.add(inmueble)
+            usuario_extendido.save()
+            inmueble.estado = False #cambiar el estado del inmueble a no disponible
+            inmueble.save()
+            messages.success(request, "¡Has arrendado el inmueble exitosamente!")
+    else:
+        if usuario_extendido.inmuebles_arrendados.filter(id=inmueble_id).exists():
+            messages.error(request, "Ya tienes este inmueble en tu lista de inmuebles arrendados")
+        else:
+            usuario_extendido.inmuebles_arrendados.add(inmueble)
+            usuario_extendido.save()
+            inmueble.estado = False #cambiar el estado del inmueble a no disponible
+            inmueble.save()
+            messages.success(request, "¡El inmueble se ha agregado a tu lista de inmuebles arrendados!")
+
+    return redirect('vista_inmueble', pk=inmueble_id) 
+ 

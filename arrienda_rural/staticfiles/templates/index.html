@@ -1,7 +1,29 @@
-{% extends 'base.html' %} {% load static %} {%block contenido %}
+{% extends 'base.html' %}
+{% load static %}
+{% block contenido %}
+  <!-- Sección de Por qué elegirnos -->
+  <div class="mt-5">
+    <h2>¿Por qué elegirnos?</h2>
+    <p>En Arrienda Rural, te ofrecemos la mejor selección de propiedades rurales para arrendar, con todas las comodidades y lejos del bullicio de la ciudad.</p>
+    <ul>
+      <li>Propiedades seleccionadas cuidadosamente</li>
+      <li>Precios competitivos</li>
+      <li>Atención al cliente 24/7</li>
+      <li>Proceso de arrendamiento seguro y fácil</li>
+    </ul>
+  </div>
 
-<h1 class="index-h1">
-  Arrienda Rural: Lejos de la ciudad, cerca de ti
-</h1>
-
-{% endblock contenido%}
+  <!-- Sección de Registro de Usuarios -->
+  <div class="row mt-4">
+    <div class="col-md-6 text-center">
+      <h3>¿Eres Arrendatario?</h3>
+      <p>Regístrate y encuentra la propiedad rural perfecta para ti.</p>
+      <a href="{% url 'registro' %}" class="btn btn-success">Regístrate como Arrendatario</a>
+    </div>
+    <div class="col-md-6 text-center">
+      <h3>¿Eres Arrendador?</h3>
+      <p>Regístrate y publica tu propiedad para arrendarla.</p>
+      <a href="{% url 'registro' %}" class="btn btn-primary">Regístrate como Arrendador</a>
+    </div>
+  </div>
+{% endblock %}

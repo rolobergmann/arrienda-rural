@@ -3,12 +3,18 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
     transform: translateY(-100%);
     z-index: 1000;
-;
   }
 
   .navbar-brand {
-    font-weight: bold; /* Texto del logo más pesado */
-    color: white!important /* Color del logo */
+    max-width: 100px;
+    max-height: 70px;
+    margin-right: 1rem; /* Espacio entre el logo y el texto */ 
+    margin-left: 1rem;
+    border-radius: 10px
+  }
+  .navbar-brand img {
+    border-radius: 10%;  /* For a circular shape */
+    /* Or use specific values like: border-radius: 10px; */
   }
 
   .navbar-brand:hover {
@@ -46,7 +52,6 @@
     border: none; /* Elimina el borde del botón */
     border-radius: 20px; /* Bordes redondeados para el botón */
     color: #fff; /* Color del texto del botón */
-    padding: 0.75rem 1.25rem; /* Ajuste del padding */
     cursor: pointer; /* Indicador de cursor en mano */
   }
 
@@ -75,10 +80,9 @@
   }
   
   /* Estilos generales para el formulario */
-  .container form {
+  .container form{
     margin: 20px auto; /* Margen superior e inferior */
     padding: 20px;
-    background-color: #f5f5f5; /* Color de fondo claro */
     border-radius: 5px; /* Bordes redondeados */
     margin: 0 auto;
   }
@@ -123,17 +127,20 @@
   }
 
   .hero-section {
-    background-image: url('../media/index/hero.jpeg'); /* Cambia el path según la ubicación de tu imagen */
+    background-image: url('../media/index/hero1.jpeg'); /* Cambia el path según la ubicación de tu imagen */
+    background-attachment: fixed;
     background-size: cover;
-    background-position: center;
-    height: 50vh; /* 35% de la altura de la pantalla */
+    background-position:bottom;
+    height: 60vh; /* 35% de la altura de la pantalla */
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
     text-align: center;
     position: relative;
+    top: 0;
 }
+
 
 .hero-section::before {
     content: '';

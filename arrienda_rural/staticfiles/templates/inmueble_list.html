@@ -29,6 +29,7 @@
   <ul>
     {% for inmueble in inmuebles %}
       <li>{{ inmueble.nombre }} - {{ inmueble.description }} - {{ inmueble.direccion.comuna }}</li>
+      <a href="{% url 'vista_inmueble' inmueble.id %}">Ver</a>
     {% empty %}
       <li>No se encontraron inmuebles.</li>
     {% endfor %}

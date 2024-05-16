@@ -78,7 +78,7 @@ class ExtendUsuario(models.Model):
     telefono = models.CharField(max_length=15, verbose_name="Telefono")
     tipo_usuario = models.CharField(max_length=20, choices=TIPO_USUARIO_ELECCIONES,default='Arrendatario', verbose_name="Tipo_usuario")
     direccion = models.OneToOneField(Direccion, on_delete=models.DO_NOTHING, null=True, blank=True, verbose_name="Direccion")
-    inmuebles =models.ForeignKey(Inmueble, on_delete=models.DO_NOTHING, null=True, blank=True, verbose_name="Inmuebles")
+    inmuebles_arrendados = models.ManyToManyField(Inmueble, blank=True, verbose_name="Inmuebles Arrendados")
 
     def __str__(self):
         return f"{self.usuario.username} - Perfil"

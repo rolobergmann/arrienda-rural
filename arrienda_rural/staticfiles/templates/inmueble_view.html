@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% load static %}
 
 {% block contenido %}
   <div class="container mt-5">
@@ -8,7 +8,7 @@
       </div>
       <div class="card-body">
         {% if inmueble.imagenes %}
-          <img src="{% media 'inmuebles/casa1-1024x1024.jpg' %}" class="img-fluid mb-3" alt="Imagen del inmueble" />
+          <img src="{% static 'media/inmuebles/casa1-1024x1024.jpg' %}" class="img-fluid mb-3" alt="Imagen del inmueble" />
         {% endif %}
         <p class="card-text">
           <strong>Descripción:</strong> {{ inmueble.description }}
