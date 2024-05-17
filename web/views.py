@@ -40,9 +40,9 @@ class ArrendarListView(ListView):
         
         imagenes = self.request.GET.get('imagenes')
         if imagenes == 'Not Null':
-            queryset = queryset.exclude(imagenes__isnull=True)
+            queryset = queryset.exclude(imagenes__isnull=True).exclude(imagenes__exact='')
         elif imagenes == 'Null':
-            queryset = queryset.filter(imagenes__isnull=True)
+            queryset = queryset.filter(imagenes__isnull=True) | queryset.filter(imagenes__exact='')
 
 
         return queryset
