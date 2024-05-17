@@ -26,14 +26,28 @@
     </select>
   </form>
 
-  <ul>
-    {% for inmueble in inmuebles %}
-      <li>{{ inmueble.nombre }} - {{ inmueble.description }} - {{ inmueble.direccion.comuna }}</li>
-      <a href="{% url 'vista_inmueble' inmueble.id %}">Ver</a>
-    {% empty %}
-      <li>No se encontraron inmuebles.</li>
-    {% endfor %}
-  </ul>
+  <div class="container">
+    <div class="row">
+      {% for inmueble in inmuebles %}
+        <div class="col-md-4 mb-4">
+          <div class="card h-100">
+            <img src="{% static 'media/inmuebles/casa1-1024x1024.jpg' %}" class="card-img-top" alt="{{ inmueble.nombre }}" /> <div class="card-body">
+              <h5 class="card-title">{{ inmueble.nombre }}</h5>
+              <p class="card-text">{{ inmueble.description|truncatewords:20 }}</p>
+              <p class="card-text">
+                <i class="fas fa-map-marker-alt"></i> {{ inmueble.direccion.comuna }}
+              </p>
+              <a href="{% url 'vista_inmueble' inmueble.id %}" class="btn btn-primary btn-sm">Ver más</a>
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        <div class="col-md-12 text-center">
+          <p class="text-muted">No se encontraron inmuebles.</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {

@@ -38,14 +38,17 @@ class Inmueble(models.Model):
     cantidad_banos = models.IntegerField(null=False)
     tipo_de_inmueble = models.CharField(max_length=20, choices=TIPO_INMUEBLE_ELECCIONES,default='Casa')
     precio_arriendo = models.IntegerField(null=False)
-    direccion = models.OneToOneField(Direccion, on_delete=models.DO_NOTHING, null=True)
     estado = models.BooleanField(default=False, choices=(
         (True, 'Disponible'),
         (False, 'No disponible')
     ))
-    imagenes = models.ImageField(upload_to='media/inmuebles/', null=True, blank=True)
+    imagenes = models.ImageField(upload_to='arrienda_rural/front/assets/media/inmuebles', null=True, blank=True)
     destacado = models.BooleanField(default=False)
     disponible = models.BooleanField(default=True)
+    direccion_id = models.OneToOneField(Direccion, on_delete=models.CASCADE, null=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+
+
 
 
         
@@ -78,7 +81,8 @@ class ExtendUsuario(models.Model):
     telefono = models.CharField(max_length=15, verbose_name="Telefono")
     tipo_usuario = models.CharField(max_length=20, choices=TIPO_USUARIO_ELECCIONES,default='Arrendatario', verbose_name="Tipo_usuario")
     direccion = models.OneToOneField(Direccion, on_delete=models.DO_NOTHING, null=True, blank=True, verbose_name="Direccion")
-    inmuebles_arrendados = models.ManyToManyField(Inmueble, blank=True, verbose_name="Inmuebles Arrendados")
+    inmuebles_arrendados = models.ManyToManyField(Inmueble, blank=True, verbose_name="Inmuebles Arrendados",related_name="inmuebles_arrendados")
+    #inmuebles_publicados = models.ManyToManyField(Inmueble, blank=True, verbose_name="Inmuebles Publicados",related_name="inmuebles_publicados")
 
     def __str__(self):
         return f"{self.usuario.username} - Perfil"

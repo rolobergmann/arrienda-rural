@@ -1,15 +1,33 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transform: translateY(-24px);
+  }
+  
+
 .navbar {
     background-color: #ffffff !important; /* Color de fondo del navbar */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
     transform: translateY(-100%);
     z-index: 1000;
-;
   }
 
   .navbar-brand {
-    font-weight: bold; /* Texto del logo más pesado */
-    color: white!important /* Color del logo */
-    
+    max-width: 100px;
+    max-height: 70px;
+    margin-right: 1rem; /* Espacio entre el logo y el texto */ 
+    margin-left: 1rem;
+    border-radius: 10px
+  }
+  .navbar-brand img {
+    border-radius: 10%;  /* For a circular shape */
+    /* Or use specific values like: border-radius: 10px; */
   }
 
   .navbar-brand:hover {
@@ -122,11 +140,11 @@
   }
 
   .hero-section {
-    background-image: url('../media/index/hero1.jpeg'); /* Cambia el path según la ubicación de tu imagen */
+    background-image: url('../media/index/hero2.jpeg'); /* Cambia el path según la ubicación de tu imagen */
     background-attachment: fixed;
     background-size: cover;
-    background-position:bottom;
-    height: 60vh; /* 35% de la altura de la pantalla */
+    background-position:center;
+    height: 60vh; 
     display: flex;
     align-items: center;
     justify-content: center;
@@ -163,4 +181,16 @@
 }
 .navbar-light{
   background: transparent !important;
+}
+
+footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  margin-top: 20px
+}
+
+footer p {
+  margin: 0;
+  padding: 10px
 }

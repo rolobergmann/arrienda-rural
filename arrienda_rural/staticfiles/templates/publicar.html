@@ -1,7 +1,11 @@
 {% extends 'base.html' %} {% block contenido %}
   <body>
     <div class="contenedor">
-      <h1>Arrienda tu lugar perfecto</h1>
+      <h1>Publica tu propiedad en 5 minutos!</h1>
+      <form method="post">
+        {% csrf_token %} {{ form.as_p }}
+        <button type="submit">Publicar</button>
+      </form>
       <a href="{% url 'arrendar_list' %}" class="btn btn-primary">Volver a la lista de inmuebles</a>
     </div>
   </body>

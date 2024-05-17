@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import ContactForm, ExtendUsuario
+from .models import ContactForm, ExtendUsuario, Inmueble, ComunasChile,RegionesChile, Direccion
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.forms import inlineformset_factory
@@ -41,3 +41,30 @@ class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = ExtendUsuario
         fields = ['nombre_1', 'nombre_2', 'apellido_1', 'apellido_2', 'telefono'] 
+
+class InmuebleCreationForm(forms.ModelForm):
+    class Meta:
+        model = Inmueble
+        fields = ['nombre', 'description', 'm2_construidos', 'm2_totales', 'estacionamientos', 'cantidad_habitaciones', 'cantidad_banos', 'tipo_de_inmueble', 'precio_arriendo', 'estado', 'imagenes', 'destacado', 'disponible']
+class DireccionForm(forms.ModelForm):
+    region = forms.ModelChoiceField(queryset=RegionesChile.objects.all(), required=True)
+    comuna = forms.ModelChoiceField(queryset=ComunasChile.objects.none(), required=True)
+    
+    class Meta:
+        model = Direccion
+        fields = ['calle', 'numero', 'depto', 'region', 'comuna']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if 'region' in self.data:
+            try:
+                region_id = int(self.data.get('region'))
+                self.fields['comuna'].queryset = ComunasChile.objects.filter(region_id=region_id).order_by('nombre')
+            except (ValueError, TypeError):
+                pass
+        elif self.instance.pk:
+            self.fields['comuna'].queryset = self.instance.region.comunaschile_set.order_by('nombre')
+
+
+
+#DireccionFormSet = inlineformset_factory(Inmueble, Direccion, form=DireccionForm, extra=1, can_delete=False)

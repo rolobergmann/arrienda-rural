@@ -10,20 +10,19 @@
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Publicar</a>
-            </li>
+
             <li class="nav-item">
               <a class="nav-link" href="{% url 'arrendar_list' %}">Arrendar</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Sobre Nosotros</a>
+              <a class="nav-link" href="{% url 'publicar_inmueble' %}">Publicar</a>
             </li>
+
             <li class="nav-item">
               <a class="nav-link" href="{% url 'contacto' %}">Contacto</a>
             </li>
             <li>
-              <a class="nav-link active" aria-current="page" href="{% url 'user_redirect' %}">Su cuenta</a>
+              <a class="nav-link" href="{% url 'user_redirect' %}">Su cuenta</a>
             </li>
           </ul>
           <form class="justify-content-start">

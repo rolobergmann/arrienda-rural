@@ -5,7 +5,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.utils import timezone
 from django.views.generic import ListView
 
-from web.forms import ContactFormModelForm,RegistroForm, UserUpdateForm
+from web.forms import ContactFormModelForm,RegistroForm, UserUpdateForm,InmuebleCreationForm,DireccionForm
 from web.models import ContactForm, Inmueble, RegionesChile, ComunasChile, ExtendUsuario
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin  
@@ -14,6 +14,9 @@ from django.views.generic.edit import UpdateView
 from django.contrib import messages
 from django.urls import reverse_lazy, reverse
 from django.core.exceptions import PermissionDenied
+from django.http import JsonResponse
+
+
 
 class ArrendarListView(ListView):
     model = Inmueble
@@ -59,12 +62,33 @@ def index(request):
 def exito(request):
     return render(request, "exito.html")
 
+
 def arrendar(request):
     return render(request, "arrendar.html")
 
 
-def loggedout(request):
-    return render(request, "registration/logged_out.html")
+
+from django.shortcuts import render, redirect
+from .forms import InmuebleCreationForm, DireccionForm
+
+def crear_inmueble(request):
+    if request.method == 'POST':
+        direccion_form = DireccionForm(request.POST)
+        inmueble_form = InmuebleCreationForm(request.POST, request.FILES)
+        
+        if direccion_form.is_valid() and inmueble_form.is_valid():
+            direccion = direccion_form.save()
+            inmueble = inmueble_form.save(commit=False)
+            inmueble.inmueble_id = direccion  # Asocia la dirección con el inmueble
+            inmueble.owner = request.user
+            inmueble.save()
+            return redirect('user_redirect')  # Reemplaza con la URL de éxito deseada
+    else:
+        direccion_form = DireccionForm()
+        inmueble_form = InmuebleCreationForm()
+    
+    return render(request, 'publicar.html', {'inmueble_form': inmueble_form, 'direccion_form': direccion_form})
+
 
 
 # Create your views here.
@@ -81,6 +105,9 @@ def contacto(request):
             # redirect to a new URL:
             contact_form = ContactForm.objects.create(**form.cleaned_data)
             return HttpResponseRedirect("/exito")
+        else:
+            print(form.errors)
+
 
         # if a GET (or any other method) we'll create a blank form
     else:
@@ -124,9 +151,10 @@ class ArrendadorAccountView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['user_profile'] = ExtendUsuario.objects.get(usuario=self.request.user)  
-        # Add other relevant data for arrendadores
+        context['user_profile'] = ExtendUsuario.objects.get(usuario=self.request.user)
+        context['inmuebles_publicados'] = Inmueble.objects.filter(owner=self.request.user) # Obtiene los inmuebles publicados por el usuario actual
         return context
+    
 @login_required 
 def user_redirect_view(request):
     if not request.user.is_authenticated:
@@ -209,5 +237,10 @@ def confirmar_arriendo(request, inmueble_id):
             inmueble.save()
             messages.success(request, "¡El inmueble se ha agregado a tu lista de inmuebles arrendados!")
 
-    return redirect('vista_inmueble', pk=inmueble_id) 
- 
+    return redirect('vista_inmueble', pk=inmueble_id)
+
+
+def cargar_comunas(request):
+    region_id = request.GET.get('region_id')
+    comunas = ComunasChile.objects.filter(region_id=region_id).order_by('nombre')
+    return JsonResponse(list(comunas.values('id', 'nombre')), safe=False)
