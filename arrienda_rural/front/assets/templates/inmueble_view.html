@@ -11,6 +11,9 @@
           <img src="{% static 'media/inmuebles/casa1-1024x1024.jpg' %}" class="img-fluid mb-3" alt="Imagen del inmueble" />
         {% endif %}
         <p class="card-text">
+          <strong>Comuna:</strong>{{ inmueble.direccion_id.comuna.nombre }}
+        </p>
+        <p class="card-text">
           <strong>Descripción:</strong> {{ inmueble.description }}
         </p>
         <p class="card-text">
@@ -35,19 +38,37 @@
           <strong>Precio de Arriendo:</strong> ${{ inmueble.precio_arriendo }}
         </p>
         <p class="card-text">
-          <strong>Dirección:</strong> {{ inmueble.direccion }}
-        </p>
-        <p class="card-text">
           <strong>Estado:</strong> {{ inmueble.get_estado_display }}
         </p>
       </div>
       <div class="card-footer text-muted">
         <a href="{% url 'arrendar_list' %}" class="btn btn-secondary">Volver a la lista de inmuebles</a>
-        {% if user.is_authenticated %}
+        {% if esta_arrendado.inmueble.esta_arrendado %}
+          <button class="btn btn-secondary btn-sm" disabled>No disponible</button>
+        {% elif inmueble.es_arrendatario %}
+          <a href="#" class="btn btn-warning btn-sm">Pedir fin del contrato</a>
+        {% elif user.is_authenticated %}
           <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#confirmarArriendoModal">Arrendar</button>
         {% else %}
           <a href="{% url 'login' %}" class="btn btn-success">Inicia sesión para arrendar</a>
         {% endif %}
+        <a href="{% url 'editar_inmueble' inmueble.pk %}">Editar</a>
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarInmuebleModal{{ inmueble.id }}">Eliminar</button>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="eliminarInmuebleModal{{ inmueble.id }}" tabindex="-1" aria-labelledby="eliminarInmuebleModalLabel{{ inmueble.id }}" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="eliminarInmuebleModalLabel{{ inmueble.id }}">Confirmar Eliminación</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">¿Estás seguro de que quieres eliminar este inmueble ({{ inmueble.nombre }})? Esta acción no se puede deshacer.</div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <a href="{% url 'eliminar_inmueble' inmueble.id %}" class="btn btn-danger">Eliminar</a>
+        </div>
       </div>
     </div>
   </div>

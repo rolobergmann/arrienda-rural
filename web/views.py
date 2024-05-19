@@ -1,11 +1,13 @@
 from django.contrib.auth import login, authenticate, logout, REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect
+from .forms import InmuebleCreationForm, DireccionForm
 from django.shortcuts import redirect, render, get_object_or_404
 from django.utils import timezone
 from django.views.generic import ListView
 
-from web.forms import ContactFormModelForm,RegistroForm, UserUpdateForm,InmuebleCreationForm,DireccionForm
+from web.forms import ContactFormModelForm,RegistroForm, UserUpdateForm,InmuebleCreationForm,DireccionForm,InmuebleUpdateForm
 from web.models import ContactForm, Inmueble, RegionesChile, ComunasChile, ExtendUsuario
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin  
@@ -15,6 +17,7 @@ from django.contrib import messages
 from django.urls import reverse_lazy, reverse
 from django.core.exceptions import PermissionDenied
 from django.http import JsonResponse
+from django.views.generic.edit import UpdateView
 
 
 
@@ -28,11 +31,11 @@ class ArrendarListView(ListView):
 
         region_id = self.request.GET.get('region')
         if region_id:
-            queryset = queryset.filter(direccion__comuna__region_id=region_id)
+            queryset = queryset.filter(direccion_id__comuna__region_id=region_id)
 
         comuna_id = self.request.GET.get('comuna')
         if comuna_id:
-            queryset = queryset.filter(direccion__comuna_id=comuna_id)
+            queryset = queryset.filter(direccion_id__comuna_id=comuna_id)
 
         tipo_de_inmueble = self.request.GET.get('tipo_de_inmueble')
         if tipo_de_inmueble:
@@ -52,6 +55,8 @@ class ArrendarListView(ListView):
         context['regiones'] = RegionesChile.objects.all()  # Add regions for the filter
         context['tipos_de_inmueble'] = Inmueble.TIPO_INMUEBLE_ELECCIONES  # Add tipos de inmueble
         context['selected_imagenes'] = self.request.GET.get('imagenes', '')
+        for inmueble in context['inmuebles']:
+            inmueble.esta_arrendado = inmueble.estado == False
         return context
 
 
@@ -66,11 +71,7 @@ def exito(request):
 def arrendar(request):
     return render(request, "arrendar.html")
 
-
-
-from django.shortcuts import render, redirect
-from .forms import InmuebleCreationForm, DireccionForm
-
+@login_required
 def crear_inmueble(request):
     if request.method == 'POST':
         direccion_form = DireccionForm(request.POST)
@@ -135,7 +136,7 @@ def registro(request):
 
 def exit(request):
     logout(request)
-    return redirect("loggedout")
+    return redirect("index")
 
 class ArrendatarioAccountView(LoginRequiredMixin, TemplateView):
     template_name = 'arrendatario_account.html'
@@ -244,3 +245,27 @@ def cargar_comunas(request):
     region_id = request.GET.get('region_id')
     comunas = ComunasChile.objects.filter(region_id=region_id).order_by('nombre')
     return JsonResponse(list(comunas.values('id', 'nombre')), safe=False)
+
+class InmuebleUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Inmueble
+    form_class = InmuebleUpdateForm
+    template_name = 'editar_inmueble.html'
+
+    def get_success_url(self):
+        return reverse_lazy('vista_inmueble', kwargs={'pk': self.object.pk})
+    
+    def test_func(self):
+        inmueble = self.get_object()
+        return inmueble.owner == self.request.user  # Solo el propietario puede editar
+    
+@login_required
+def eliminar_inmueble(request, pk):
+    inmueble = get_object_or_404(Inmueble, pk=pk)
+
+    if inmueble.owner != request.user:
+        messages.error(request, "No tienes permiso para eliminar este inmueble.")
+        return redirect('arrendador_account')
+
+    inmueble.delete()  # Elimina el inmueble
+    messages.success(request, "El inmueble ha sido eliminado.")
+    return redirect('arrendador_account')

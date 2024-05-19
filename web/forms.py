@@ -67,4 +67,7 @@ class DireccionForm(forms.ModelForm):
 
 
 
-#DireccionFormSet = inlineformset_factory(Inmueble, Direccion, form=DireccionForm, extra=1, can_delete=False)
+class InmuebleUpdateForm(forms.ModelForm):  # Puedes reutilizar InmuebleCreationForm si es adecuado
+    class Meta:
+        model = Inmueble
+        fields = ['nombre', 'description', 'm2_construidos', 'm2_totales', 'estacionamientos', 'cantidad_habitaciones', 'cantidad_banos', 'tipo_de_inmueble', 'precio_arriendo', 'estado', 'imagenes', 'destacado', 'disponible']

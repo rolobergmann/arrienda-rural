@@ -1,12 +1,36 @@
-{% extends 'base.html' %} {% block contenido %}
+{% extends 'base.html' %}
+{% block contenido %}
   <body>
     <div class="contenedor">
       <h1>Publica tu propiedad en 5 minutos!</h1>
-      <form method="post">
-        {% csrf_token %} {{ form.as_p }}
-        <button type="submit">Publicar</button>
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ inmueble_form.as_p }}
+        <h3>Dirección</h3>
+        {{ direccion_form.as_p }}
+        <button type="submit">Crear Inmueble</button>
       </form>
-      <a href="{% url 'arrendar_list' %}" class="btn btn-primary">Volver a la lista de inmuebles</a>
     </div>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $('#id_region').change(function () {
+          var url = "{% url 'cargar_comunas' %}" // URL para cargar las comunas
+          var regionId = $(this).val()
+      
+          $.ajax({
+            url: url,
+            data: {
+              region_id: regionId
+            },
+            success: function (data) {
+              $('#id_comuna').html('')
+              $.each(data, function (key, value) {
+                $('#id_comuna').append('<option value="' + value.id + '">' + value.nombre + '</option>')
+              })
+            }
+          })
+        })
+      })
+    </script>
   </body>
 {% endblock %}

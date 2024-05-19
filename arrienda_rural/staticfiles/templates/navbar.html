@@ -10,23 +10,25 @@
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
             </li>
-            {% if user_profile.tipo_usuario == 'arrendatario' %}
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'arrendar_list' %}">Arrendar</a>
-              </li>
-            {% elif user_profile.tipo_usuario == 'arrendador' %}
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'publicar_inmueble' %}">Publicar</a>
-              </li>
-            {% else %}
 
-            {% endif %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'arrendar_list' %}">Arrendar</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'publicar_inmueble' %}">Publicar</a>
+            </li>
+
             <li class="nav-item">
               <a class="nav-link" href="{% url 'contacto' %}">Contacto</a>
             </li>
             <li>
               <a class="nav-link" href="{% url 'user_redirect' %}">Su cuenta</a>
             </li>
+            {% if request.user.is_superuser %}
+              <li>
+                <a class="nav-link" href="/admin/" target="_blank">Admin</a>
+              </li>
+            {% endif %}
           </ul>
           <form class="justify-content-start">
             {% if request.user.is_authenticated %}

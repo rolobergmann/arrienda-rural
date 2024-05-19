@@ -38,7 +38,7 @@
               <h5 class="card-title">{{ inmueble.nombre }}</h5>
               <p class="card-text">{{ inmueble.description|truncatewords:20 }}</p>
               <p class="card-text">
-                <i class="fas fa-map-marker-alt"></i> {{ inmueble.direccion_id.comuna }}
+                <i class="fas fa-map-marker-alt"></i> {{ inmueble.direccion_id.comuna.nombre }}
               </p>
               <a href="{% url 'vista_inmueble' inmueble.id %}" class="btn btn-primary btn-sm">Ver más</a>
             </div>

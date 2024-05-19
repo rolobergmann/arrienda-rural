@@ -27,18 +27,20 @@ urlpatterns = [
     path("exito", web_views.exito, name="exito"),
     path("registro", web_views.registro, name="registro"),
     path("loggedout", web_views.logout, name="loggedout"),
-    path("logout/", web_views.exit, name="exit"),
+    path("index", web_views.exit, name="exit"),
     path('arrendar_list/', web_views.ArrendarListView.as_view(), name='arrendar_list'),
     path('arrendar_list/arrendar/', web_views.arrendar, name='arrendar'),
     path('publicar_inmueble/', web_views.crear_inmueble, name='publicar_inmueble'),
     path('account/', web_views.user_redirect_view, name='user_redirect'),
-    path('account/arrendatario/', web_views.ArrendatarioAccountView.as_view(), name='arrendatario_account'),
+    path('account/arrendatario/',  web_views.ArrendatarioAccountView.as_view(), name='arrendatario_account'),
     path('account/arrendador/', web_views.ArrendadorAccountView.as_view(), name='arrendador_account'),
     path('account/arrendatario/editar/<str:pk>/', web_views.ArrendatarioUpdateView.as_view(), name='arrendatario_update'),
     path('account/arrendador/editar/<str:pk>/', web_views.ArrendadorUpdateView.as_view(), name='arrendador_update'),
     path('vista_inmueble/<str:pk>/', web_views.inmueble_view, name='vista_inmueble'),
     path('inmueble/<int:inmueble_id>/confirmar_arriendo/', web_views.confirmar_arriendo, name='confirmar_arriendo'),
-    path('ajax/cargar-comunas/', web_views.cargar_comunas, name='cargar_comunas')
+    path('ajax/cargar-comunas/', web_views.cargar_comunas, name='cargar_comunas'),
+    path('inmueble/<int:pk>/editar/', web_views.InmuebleUpdateView.as_view(), name='editar_inmueble'),
+    path('inmueble/<int:pk>/eliminar/', web_views.eliminar_inmueble, name='eliminar_inmueble'),
 ]
 
 urlpatterns += [
