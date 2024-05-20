@@ -7,8 +7,8 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.utils import timezone
 from django.views.generic import ListView
 
-from web.forms import ContactFormModelForm,RegistroForm, UserUpdateForm,InmuebleCreationForm,DireccionForm,InmuebleUpdateForm
-from web.models import ContactForm, Inmueble, RegionesChile, ComunasChile, ExtendUsuario
+from web.forms import MultipleImageForm,ContactFormModelForm,RegistroForm, UserUpdateForm,InmuebleCreationForm,DireccionForm,InmuebleUpdateForm
+from web.models import ContactForm, Inmueble, RegionesChile, ComunasChile, ExtendUsuario,Imagen
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin  
 from django.contrib.auth.views import redirect_to_login
@@ -17,7 +17,7 @@ from django.contrib import messages
 from django.urls import reverse_lazy, reverse
 from django.core.exceptions import PermissionDenied
 from django.http import JsonResponse
-from django.views.generic.edit import UpdateView
+from django.views.generic.edit import UpdateView, FormView
 
 
 
@@ -71,28 +71,7 @@ def exito(request):
 def arrendar(request):
     return render(request, "arrendar.html")
 
-@login_required
-def crear_inmueble(request):
-    if request.method == 'POST':
-        direccion_form = DireccionForm(request.POST)
-        inmueble_form = InmuebleCreationForm(request.POST, request.FILES)
-        
-        if direccion_form.is_valid() and inmueble_form.is_valid():
-            direccion = direccion_form.save()
-            inmueble = inmueble_form.save(commit=False)
-            inmueble.inmueble_id = direccion  # Asocia la dirección con el inmueble
-            inmueble.owner = request.user
-            inmueble.save()
-            return redirect('user_redirect')  # Reemplaza con la URL de éxito deseada
-    else:
-        direccion_form = DireccionForm()
-        inmueble_form = InmuebleCreationForm()
-    
-    return render(request, 'publicar.html', {'inmueble_form': inmueble_form, 'direccion_form': direccion_form})
 
-
-
-# Create your views here.
 
 
 def contacto(request):
@@ -213,7 +192,8 @@ class ArrendadorUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         
 def inmueble_view(request, pk):
     inmueble = get_object_or_404(Inmueble, pk=pk)
-    return render(request, 'inmueble_view.html', {'inmueble': inmueble})
+    imagenes = inmueble.imagenes.all()
+    return render(request, 'inmueble_view.html', {'inmueble': inmueble, 'imagenes': imagenes})
 
 def confirmar_arriendo(request, inmueble_id):
     inmueble = get_object_or_404(Inmueble, id=inmueble_id)
@@ -269,3 +249,33 @@ def eliminar_inmueble(request, pk):
     inmueble.delete()  # Elimina el inmueble
     messages.success(request, "El inmueble ha sido eliminado.")
     return redirect('arrendador_account')
+
+    
+@login_required
+def crear_inmueble(request):
+    if request.method == 'POST':
+        direccion_form = DireccionForm(request.POST)
+        inmueble_form = InmuebleCreationForm(request.POST)
+        imagen_form = MultipleImageForm(request.POST, request.FILES)
+
+        if direccion_form.is_valid() and inmueble_form.is_valid() and imagen_form.is_valid():
+            direccion = direccion_form.save()
+            inmueble = inmueble_form.save(commit=False)
+            inmueble.direccion_id = direccion
+            inmueble.owner = request.user
+            inmueble.save()
+
+            for img in request.FILES.getlist('imagenes'):
+                Imagen.objects.create(inmueble=inmueble, imagen=img)
+
+            return redirect('user_redirect')  # Reemplaza con la URL de éxito deseada
+    else:
+        direccion_form = DireccionForm()
+        inmueble_form = InmuebleCreationForm()
+        imagen_form = MultipleImageForm()
+
+    return render(request, 'publicar.html', {
+        'direccion_form': direccion_form,
+        'inmueble_form': inmueble_form,
+        'imagen_form': imagen_form,
+    })

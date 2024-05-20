@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import *
-from .models import ContactForm, ExtendUsuario, User
+from .models import ContactForm, ExtendUsuario, User,Imagen
 import datetime
 
 class DateSentFilter(admin.SimpleListFilter):
@@ -38,10 +38,16 @@ class DireccionAdmin(admin.ModelAdmin):
     get_region_nombre.short_description = 'Region'
 admin.site.register(Direccion, DireccionAdmin)
 
+class ImagenInline(admin.TabularInline):
+    model = Imagen
+    extra = 2  # Número de imágenes adicionales para agregar por defecto
 class InmuebleAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'description', 'm2_construidos', 'm2_totales', 'estacionamientos', 'cantidad_habitaciones', 'cantidad_banos', 'tipo_de_inmueble', 'precio_arriendo','imagenes')
+    list_display = ('nombre', 'description', 'm2_construidos', 'm2_totales', 'estacionamientos', 'cantidad_habitaciones', 'cantidad_banos', 'tipo_de_inmueble', 'precio_arriendo')
     search_fields = ('nombre','tipo_de_inmueble')
     list_filter = ('tipo_de_inmueble','cantidad_habitaciones','cantidad_banos','estacionamientos')
+    
+    inlines = [ImagenInline]
+    
 admin.site.register(Inmueble,InmuebleAdmin)
 
 class ContactFormAdmin(admin.ModelAdmin):
@@ -64,3 +70,11 @@ class CustomUserAdmin(UserAdmin):
 
 admin.site.unregister(User)  # Unregister the default UserAdmin
 admin.site.register(User, CustomUserAdmin)  # Register your custom UserAdmin
+
+""" class ImagenAdmin(admin.ModelAdmin):
+    list_display = ('inmueble', 'imagen')
+
+admin.site.register(Imagen, ImagenAdmin) """
+
+
+

@@ -1,11 +1,11 @@
 from django import forms
-from django.forms import ModelForm
-from .models import ContactForm, ExtendUsuario, Inmueble, ComunasChile,RegionesChile, Direccion
+from .models import ContactForm, ExtendUsuario, Inmueble, ComunasChile,RegionesChile, Direccion,Imagen
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.forms import inlineformset_factory
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.forms.widgets import ClearableFileInput
 
 # Create the form class.
 
@@ -41,11 +41,22 @@ class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = ExtendUsuario
         fields = ['nombre_1', 'nombre_2', 'apellido_1', 'apellido_2', 'telefono'] 
+class InmuebleUpdateForm(forms.ModelForm):  # Puedes reutilizar InmuebleCreationForm si es adecuado
+    class Meta:
+        model = Inmueble
+        fields = ['nombre', 'description', 'm2_construidos', 'm2_totales', 'estacionamientos', 'cantidad_habitaciones', 'cantidad_banos', 'tipo_de_inmueble', 'precio_arriendo', 'estado','destacado', 'disponible']
+
+class CustomClearableFileInput(ClearableFileInput):
+    allow_multiple_selected = True
+
+class MultipleImageForm(forms.Form):
+    imagenes = forms.ImageField(widget=CustomClearableFileInput(attrs={'multiple': True}))
 
 class InmuebleCreationForm(forms.ModelForm):
     class Meta:
         model = Inmueble
-        fields = ['nombre', 'description', 'm2_construidos', 'm2_totales', 'estacionamientos', 'cantidad_habitaciones', 'cantidad_banos', 'tipo_de_inmueble', 'precio_arriendo', 'estado', 'imagenes', 'destacado', 'disponible']
+        fields = ['nombre', 'description', 'm2_construidos', 'm2_totales', 'estacionamientos', 'cantidad_habitaciones', 'cantidad_banos', 'tipo_de_inmueble', 'precio_arriendo', 'estado', 'destacado', 'disponible']
+
 class DireccionForm(forms.ModelForm):
     region = forms.ModelChoiceField(queryset=RegionesChile.objects.all(), required=True)
     comuna = forms.ModelChoiceField(queryset=ComunasChile.objects.none(), required=True)
@@ -64,10 +75,3 @@ class DireccionForm(forms.ModelForm):
                 pass
         elif self.instance.pk:
             self.fields['comuna'].queryset = self.instance.region.comunaschile_set.order_by('nombre')
-
-
-
-class InmuebleUpdateForm(forms.ModelForm):  # Puedes reutilizar InmuebleCreationForm si es adecuado
-    class Meta:
-        model = Inmueble
-        fields = ['nombre', 'description', 'm2_construidos', 'm2_totales', 'estacionamientos', 'cantidad_habitaciones', 'cantidad_banos', 'tipo_de_inmueble', 'precio_arriendo', 'estado', 'imagenes', 'destacado', 'disponible']

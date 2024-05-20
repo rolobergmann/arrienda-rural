@@ -62,6 +62,10 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'web.context_processors.user_profile_context',
+                'web.context_processors.inmueble_context',
+                'web.context_processors.user_owner_context',
+                'web.context_processors.user_renter_context',
+                'web.context_processors.arrendatario_context',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -136,9 +140,20 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'arrienda_rural/front/assets/') 
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'arrienda_rural/staticfiles')
+# Archivos subidos por los usuarios
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'arrienda_rural/front/assets/media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+# Asegúrate de incluir las URLs para servir archivos multimedia durante el desarrollo
+from django.conf import settings
+from django.conf.urls.static import static
+
+urlpatterns = [
+    # ... tus otras URL patterns ...
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 

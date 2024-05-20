@@ -26,10 +26,10 @@
                   <h2>{{ inmueble.nombre }}</h2>
                 </div>
                 <div class="card-body">
-                  {% if inmueble.imagenes %}
-                    <img src="{{ inmueble.imagenes.url }}" class="img-fluid inmueble-img mb-3" alt="Imagen del inmueble" />
+                  {% if inmueble.imagenes.all %}
+                    <img src="{{ inmueble.imagenes.first.imagen.url }}" class="img-fluid mb-3" alt="Imagen del inmueble" />
                   {% else %}
-                    <p class="text-muted">No hay imagen disponible</p>
+                    <p>No hay imágenes disponibles para este inmueble.</p>
                   {% endif %}
                   <p class="card-text">
                     <strong>Descripción:</strong> {{ inmueble.description }}
