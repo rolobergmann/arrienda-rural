@@ -32,7 +32,7 @@
         <div class="col-md-4 mb-4">
           <div class="card h-100">
             {% if inmueble.imagenes.all %}
-              <img src="{{ inmueble.imagenes.first.imagen.url }}" class="img-fluid mb-3" alt="Imagen del inmueble" />
+              <img src="{{ inmueble.imagenes.first.imagen.url }}" class="img-fluid thumbnail mb-3" alt="Imagen del inmueble" />
             {% else %}
               <p>Sin imagenes</p>
             {% endif %}
