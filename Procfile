@@ -1,1 +1,1 @@
-web: gunicorn locallibrary.wsgi --log-file 
+web: gunicorn arrienda_rural.wsgi
