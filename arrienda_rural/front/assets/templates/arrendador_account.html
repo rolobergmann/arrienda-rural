@@ -1,6 +1,4 @@
-{% extends 'base.html' %}
-{% load static %}
-{% block contenido %}
+{% extends 'base.html' %} {% load static %} {% block contenido %}
   <div class="card mb-3">
     <div class="card-body">
       <h5 class="card-title">Perfil de Arrendador</h5>
@@ -61,6 +59,7 @@
                   <p class="card-text">
                     <strong>Estado:</strong> {{ inmueble.get_estado_display }}
                   </p>
+                  <a href="{% url 'vista_inmueble' inmueble.id %}" class="btn btn-primary btn-sm">Ver más</a>
                 </div>
               </div>
             </div>

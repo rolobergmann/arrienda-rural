@@ -21,7 +21,7 @@
     <label for="imagenes">Contiene Imágenes:</label>
     <select name="imagenes" id="id_imagenes">
       <option value="">----</option>
-      <option value="Not Null">Si</option>
+      <option value="Not Null">Sí</option>
       <option value="Null">No</option>
     </select>
   </form>
@@ -77,6 +77,7 @@
       if (urlParams.has('tipo_de_inmueble')) {
         tipoInmuebleSelect.value = urlParams.get('tipo_de_inmueble')
       }
+      // Set the initial value for the imagenes select
       if (urlParams.has('imagenes')) {
         imagenesSelect.value = urlParams.get('imagenes')
       }

@@ -195,10 +195,10 @@ footer p {
 }
 
 .inmueble-card:hover {
-  transform: scale(1.05);
+  transform: scale(1.02);
 }
 
-.inmueble-img {
+/* .inmueble-img {
   width: 100%;
   height: auto;
   object-fit: cover;
@@ -209,7 +209,7 @@ footer p {
   height: auto !important;
   object-fit: cover !important;
   border-radius: 5px !important;
-}
+} */
 
 .card {
   border: 1px solid #ddd;
@@ -220,4 +220,31 @@ footer p {
 
 .card-body {
   padding: 15px;
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* Distribuir las imágenes uniformemente */
+  margin: 0 -5px; /* Para ajustar el margen lateral de los thumbnails */
+}
+
+.thumbnail {
+  width: 300px; /* Ajusta este valor para controlar cuántos thumbnails caben en una fila */
+  height: 150px; /* Tamaño de los thumbnails */
+  object-fit: cover; /* Para que las imágenes mantengan su proporción */
+  cursor: pointer; /* Para indicar que se puede hacer clic */
+  margin: 5px; /* Espacio entre las imágenes */
+}
+
+@media (max-width: 768px) {
+  .thumbnail {
+    width: 48%; /* Dos thumbnails por fila en pantallas más pequeñas */
+  }
+}
+
+@media (max-width: 480px) {
+  .thumbnail {
+    width: 98%; /* Un thumbnail por fila en pantallas muy pequeñas */
+  }
 }

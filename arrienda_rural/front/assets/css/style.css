@@ -195,10 +195,10 @@ footer p {
 }
 
 .inmueble-card:hover {
-  transform: scale(1.05);
+  transform: scale(1.02);
 }
 
-.inmueble-img {
+/* .inmueble-img {
   width: 100%;
   height: auto;
   object-fit: cover;
@@ -209,7 +209,7 @@ footer p {
   height: auto !important;
   object-fit: cover !important;
   border-radius: 5px !important;
-}
+} */
 
 .card {
   border: 1px solid #ddd;

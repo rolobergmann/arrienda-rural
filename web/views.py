@@ -40,13 +40,12 @@ class ArrendarListView(ListView):
         tipo_de_inmueble = self.request.GET.get('tipo_de_inmueble')
         if tipo_de_inmueble:
             queryset = queryset.filter(tipo_de_inmueble=tipo_de_inmueble)
-        
+
         imagenes = self.request.GET.get('imagenes')
         if imagenes == 'Not Null':
-            queryset = queryset.exclude(imagenes__isnull=True).exclude(imagenes__exact='')
+            queryset = queryset.filter(imagenes__isnull=False).distinct()
         elif imagenes == 'Null':
-            queryset = queryset.filter(imagenes__isnull=True) | queryset.filter(imagenes__exact='')
-
+            queryset = queryset.filter(imagenes__isnull=True).distinct()
 
         return queryset
 
@@ -58,6 +57,8 @@ class ArrendarListView(ListView):
         for inmueble in context['inmuebles']:
             inmueble.esta_arrendado = inmueble.estado == False
         return context
+
+
 
 
 def index(request):

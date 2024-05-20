@@ -31,8 +31,10 @@
       {% for inmueble in inmuebles %}
         <div class="col-md-4 mb-4">
           <div class="card h-100">
-            {% if inmueble.imagenes %}
-              <img src="{{ inmueble.imagenes.url }}" class="inmueble-listimg" alt="{{ inmueble.nombre }}" />
+            {% if inmueble.imagenes.all %}
+              <img src="{{ inmueble.imagenes.first.imagen.url }}" class="img-fluid mb-3" alt="Imagen del inmueble" />
+            {% else %}
+              <p>Sin imagenes</p>
             {% endif %}
             <div class="card-body">
               <h5 class="card-title">{{ inmueble.nombre }}</h5>
@@ -75,6 +77,7 @@
       if (urlParams.has('tipo_de_inmueble')) {
         tipoInmuebleSelect.value = urlParams.get('tipo_de_inmueble')
       }
+      // Set the initial value for the imagenes select
       if (urlParams.has('imagenes')) {
         imagenesSelect.value = urlParams.get('imagenes')
       }
