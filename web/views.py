@@ -191,10 +191,34 @@ class ArrendadorUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def get_success_url(self):
         return reverse('arrendador_account')
         
+
 def inmueble_view(request, pk):
     inmueble = get_object_or_404(Inmueble, pk=pk)
     imagenes = inmueble.imagenes.all()
-    return render(request, 'inmueble_view.html', {'inmueble': inmueble, 'imagenes': imagenes})
+
+    # Determine user roles
+    is_owner = inmueble.owner == request.user
+    user_profile = ExtendUsuario.objects.get(usuario=request.user)
+    user_role = user_profile.tipo_usuario
+
+    # Determine if the property is rented by the current user
+    is_renting = inmueble.arrendatarios.filter(usuario=request.user).exists()
+
+    # Determine if the property is available
+    esta_arrendado = not inmueble.estado
+
+    context = {
+        'inmueble': inmueble,
+        'imagenes': imagenes,
+        'is_owner': is_owner,
+        'user_role': user_role,
+        'is_renting': is_renting,
+        'esta_arrendado': esta_arrendado
+    }
+    return render(request, 'inmueble_view.html', context)
+
+
+
 
 def confirmar_arriendo(request, inmueble_id):
     inmueble = get_object_or_404(Inmueble, id=inmueble_id)

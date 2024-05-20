@@ -41,10 +41,11 @@ class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = ExtendUsuario
         fields = ['nombre_1', 'nombre_2', 'apellido_1', 'apellido_2', 'telefono'] 
-class InmuebleUpdateForm(forms.ModelForm):  # Puedes reutilizar InmuebleCreationForm si es adecuado
+class InmuebleUpdateForm(forms.ModelForm):
     class Meta:
         model = Inmueble
         fields = ['nombre', 'description', 'm2_construidos', 'm2_totales', 'estacionamientos', 'cantidad_habitaciones', 'cantidad_banos', 'tipo_de_inmueble', 'precio_arriendo', 'estado','destacado', 'disponible']
+        labels = {'cantidad_banos':'Cantidad de baños'}
 
 class CustomClearableFileInput(ClearableFileInput):
     allow_multiple_selected = True

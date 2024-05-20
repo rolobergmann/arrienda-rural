@@ -7,14 +7,16 @@
         <h2>{{ inmueble.nombre }}</h2>
       </div>
       <div class="card-body">
-        {% if user.is_authenticated %}
+        {% comment %} {% if user.is_authenticated %}
           <p>Bienvenido, {{ user.username }}</p>
           {% if is_owner %}
             <p>Eres el propietario</p>
+          {% elif user_role == 'arrendatario' %}
+            <p>Eres un arrendatario</p>
           {% endif %}
         {% else %}
           <p>Bienvenido, visitante</p>
-        {% endif %}
+        {% endif %} {% endcomment %}
 
         <!-- Galería de imágenes -->
         <div class="gallery">
@@ -28,7 +30,7 @@
         </div>
 
         <p class="card-text">
-          <strong>Comuna:</strong> {{ inmueble.direccion_id.comuna.nombre }}
+          <strong>Comuna:</strong> {{ inmueble.direccion_id.comuna.nombre }}, {{ inmueble.direccion_id.comuna.region.nombre }}
         </p>
         <p class="card-text">
           <strong>Descripción:</strong> {{ inmueble.description }}
@@ -61,16 +63,15 @@
       <div class="card-footer text-muted">
         <a href="{% url 'arrendar_list' %}" class="btn btn-secondary">Volver a la lista de inmuebles</a>
         {% if user.is_authenticated %}
-          {% if user_owner %}
-            <a href="{% url 'editar_inmueble' inmueble.pk %}">Editar</a>
+          {% if is_owner %}
+            <a href="{% url 'editar_inmueble' inmueble.pk %}" class="btn btn-primary">Editar</a>
             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarInmuebleModal{{ inmueble.id }}">Eliminar</button>
-          {% elif user_renter %}
+          {% elif is_renting %}
             <a href="#" class="btn btn-warning btn-sm">Pedir fin del contrato</a>
           {% endif %}
         {% else %}
           <a href="{% url 'login' %}" class="btn btn-success">Inicia sesión para arrendar</a>
         {% endif %}
-        <p>Estado: {{ esta_arrendado }}</p>
 
         {% if esta_arrendado %}
           <button class="btn btn-secondary btn-sm" disabled>No disponible</button>

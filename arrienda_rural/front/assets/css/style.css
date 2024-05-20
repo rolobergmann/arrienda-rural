@@ -190,32 +190,101 @@ footer p {
 }
 
 /* Estilos para los inmuebles */
-.inmueble-card {
+.imueble-list-card {
   transition: transform 0.3s ease;
+  max-height: 350px;
+  min-height: 350px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.inmueble-card{
+  transition: transform 0.3s ease;
+  max-height: 750px;
+  min-height: 750px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
-.inmueble-card:hover {
+/* Hover para las tarjetas */
+.inmueble-card:hover, .imueble-list-card:hover {
   transform: scale(1.02);
 }
 
-/* .inmueble-img {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  border-radius: 5px;
+/* Card body styling to ensure consistent alignment */
+.inmueble-card .card-body, .imueble-list-card .card-body {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
-.inmueble-list-img {
-  width: 100% !important;
-  height: auto !important;
-  object-fit: cover !important;
-  border-radius: 5px !important;
-} */
+
+/* Ensuring images don't affect the layout */
+.imueble-list-card img {
+  max-height: 350px;
+  object-fit: cover;
+  width: 100%;
+  padding-right: 10px;
+}
+.inmueble-card img {
+  max-height: 200px;
+  object-fit: cover;
+  width: 100%;
+}
+
+/* Ensuring card footer is always at the bottom */
+.inmueble-card .card-footer, .imueble-list-card .card-footer {
+  margin-top: auto;
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+  .inmueble-card, .imueble-list-card {
+    height: auto;
+  }
+
+  .inmueble-card img, .imueble-list-card img {
+    max-height: 100px;
+  }
+}
+@media (max-width: 768px) {
+  .inmueble-card, .imueble-list-card {
+    height: auto;
+  }
+
+  .inmueble-card img, .imueble-list-card img {
+    max-height: 150px;
+  }
+}
+
+@media (max-width: 576px) {
+  .inmueble-card, .imueble-list-card {
+    height: auto;
+  }
+
+  .inmueble-card img, .imueble-list-card img {
+    max-height: 100px;
+  }
+}
+@media (max-width: 768px) {
+  .thumbnail {
+    width: 48%; /* Dos thumbnails por fila en pantallas más pequeñas */
+  }
+}
+
+@media (max-width: 480px) {
+  .thumbnail {
+    width: 98%; /* Un thumbnail por fila en pantallas muy pequeñas */
+  }
+}
 
 .card {
   border: 1px solid #ddd;
   border-radius: 5px;
   overflow: hidden; /* Para asegurarse de que la imagen no se salga de la tarjeta */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
 }
 
 .card-body {
@@ -235,16 +304,4 @@ footer p {
   object-fit: cover; /* Para que las imágenes mantengan su proporción */
   cursor: pointer; /* Para indicar que se puede hacer clic */
   margin: 5px; /* Espacio entre las imágenes */
-}
-
-@media (max-width: 768px) {
-  .thumbnail {
-    width: 48%; /* Dos thumbnails por fila en pantallas más pequeñas */
-  }
-}
-
-@media (max-width: 480px) {
-  .thumbnail {
-    width: 98%; /* Un thumbnail por fila en pantallas muy pequeñas */
-  }
 }
