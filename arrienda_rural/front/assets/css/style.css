@@ -18,6 +18,7 @@ body {
   z-index: 1000;
 }
 
+
 .navbar-brand {
   max-width: 100px;
   max-height: 70px;
@@ -70,6 +71,24 @@ body {
 .navbar-form .btn:hover {
   background-color: #0056b3;
 }
+
+/* Estilos cuando el navbar está colapsado */
+.navbar-collapse.show {
+  background-color: transparent !important;
+  position: absolute;
+  top: 56px; /* Asegúrate de que sea la altura del navbar */
+  left: 0;
+  right: 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  right: 0 !important
+}
+
+
+/* Para evitar que el contenido se desplace hacia abajo */
+.collapse:not(.show) {
+  display: none;
+}
+
 
 .whatsapp-button {
   display: inline-block;
@@ -200,8 +219,8 @@ footer p {
 }
 .inmueble-card{
   transition: transform 0.3s ease;
-  max-height: 750px;
-  min-height: 750px;
+  max-height: 780px;
+  min-height: 780px;
   margin-bottom: 20px;
   display: flex;
   flex-direction: column;
@@ -368,5 +387,46 @@ footer p {
 }
 
 .contacto-form .btn:hover {
+  background-color: #0056b3; /* Color de fondo más oscuro al pasar el cursor */
+}
+
+
+/* Estilos para la página de registro */
+.registro-container {
+  background: #f9f9f9; /* Fondo claro */
+  padding: 20px; /* Espaciado interno */
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra */
+  max-width: 500px; /* Ancho máximo */
+  margin: 0 auto; /* Centrado */
+}
+
+.registro-container h1 {
+  text-align: center; /* Centrar el título */
+  margin-bottom: 20px; /* Espaciado inferior */
+}
+
+.registro-container .form-label {
+  font-weight: bold; /* Negrita para las etiquetas */
+}
+
+.registro-container .form-control,
+.registro-container textarea {
+  border-radius: 5px; /* Bordes redondeados para los campos de entrada */
+  border: 1px solid #ddd; /* Borde gris claro */
+}
+
+.registro-container .btn {
+  background-color: #007bff; /* Color de fondo del botón */
+  color: #fff; /* Color del texto del botón */
+  padding: 10px; /* Espaciado interno */
+  border-radius: 5px; /* Bordes redondeados */
+  border: none; /* Sin borde */
+  cursor: pointer; /* Cursor en forma de mano */
+  width: 100%; /* Ancho completo */
+  margin-top: 20px; /* Espaciado superior */
+}
+
+.registro-container .btn:hover {
   background-color: #0056b3; /* Color de fondo más oscuro al pasar el cursor */
 }

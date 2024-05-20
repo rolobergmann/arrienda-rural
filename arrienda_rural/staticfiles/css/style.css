@@ -190,32 +190,101 @@ footer p {
 }
 
 /* Estilos para los inmuebles */
-.inmueble-card {
+.imueble-list-card {
   transition: transform 0.3s ease;
+  max-height: 350px;
+  min-height: 350px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.inmueble-card{
+  transition: transform 0.3s ease;
+  max-height: 750px;
+  min-height: 750px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
-.inmueble-card:hover {
+/* Hover para las tarjetas */
+.inmueble-card:hover, .imueble-list-card:hover {
   transform: scale(1.02);
 }
 
-/* .inmueble-img {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  border-radius: 5px;
+/* Card body styling to ensure consistent alignment */
+.inmueble-card .card-body, .imueble-list-card .card-body {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
-.inmueble-list-img {
-  width: 100% !important;
-  height: auto !important;
-  object-fit: cover !important;
-  border-radius: 5px !important;
-} */
+
+/* Ensuring images don't affect the layout */
+.imueble-list-card img {
+  max-height: 350px;
+  object-fit: cover;
+  width: 100%;
+  padding-right: 10px;
+}
+.inmueble-card img {
+  max-height: 200px;
+  object-fit: cover;
+  width: 100%;
+}
+
+/* Ensuring card footer is always at the bottom */
+.inmueble-card .card-footer, .imueble-list-card .card-footer {
+  margin-top: auto;
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+  .inmueble-card, .imueble-list-card {
+    height: auto;
+  }
+
+  .inmueble-card img, .imueble-list-card img {
+    max-height: 100px;
+  }
+}
+@media (max-width: 768px) {
+  .inmueble-card, .imueble-list-card {
+    height: auto;
+  }
+
+  .inmueble-card img, .imueble-list-card img {
+    max-height: 150px;
+  }
+}
+
+@media (max-width: 576px) {
+  .inmueble-card, .imueble-list-card {
+    height: auto;
+  }
+
+  .inmueble-card img, .imueble-list-card img {
+    max-height: 100px;
+  }
+}
+@media (max-width: 768px) {
+  .thumbnail {
+    width: 48%; /* Dos thumbnails por fila en pantallas más pequeñas */
+  }
+}
+
+@media (max-width: 480px) {
+  .thumbnail {
+    width: 98%; /* Un thumbnail por fila en pantallas muy pequeñas */
+  }
+}
 
 .card {
   border: 1px solid #ddd;
   border-radius: 5px;
   overflow: hidden; /* Para asegurarse de que la imagen no se salga de la tarjeta */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
 }
 
 .card-body {
@@ -237,14 +306,108 @@ footer p {
   margin: 5px; /* Espacio entre las imágenes */
 }
 
-@media (max-width: 768px) {
-  .thumbnail {
-    width: 48%; /* Dos thumbnails por fila en pantallas más pequeñas */
-  }
+
+/* Estilos para la página de publicación de propiedades */
+.publicar-container {
+  background: #f9f9f9; /* Fondo claro para el formulario */
+  padding: 20px; /* Espaciado interno */
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra */
 }
 
-@media (max-width: 480px) {
-  .thumbnail {
-    width: 98%; /* Un thumbnail por fila en pantallas muy pequeñas */
-  }
+.publicar-form .form-label {
+  font-weight: bold; /* Negrita para las etiquetas */
+}
+
+.publicar-form .form-control,
+.publicar-form textarea {
+  border-radius: 5px; /* Bordes redondeados para los campos de entrada */
+  border: 1px solid #ddd; /* Borde gris claro */
+}
+
+.publicar-form .btn {
+  background-color: #007bff; /* Color de fondo del botón */
+  color: #fff; /* Color del texto del botón */
+  padding: 10px; /* Espaciado interno */
+  border-radius: 5px; /* Bordes redondeados */
+  border: none; /* Sin borde */
+  cursor: pointer; /* Cursor en forma de mano */
+  width: 100%; /* Ancho completo */
+}
+
+.publicar-form .btn:hover {
+  background-color: #0056b3; /* Color de fondo más oscuro al pasar el cursor */
+}
+
+/* Estilos para la página de contacto */
+.contacto-container {
+  background: #f9f9f9; /* Fondo claro para el formulario */
+  padding: 20px; /* Espaciado interno */
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra */
+}
+
+.contacto-form .form-label {
+  font-weight: bold; /* Negrita para las etiquetas */
+}
+
+.contacto-form .form-control,
+.contacto-form textarea {
+  border-radius: 5px; /* Bordes redondeados para los campos de entrada */
+  border: 1px solid #ddd; /* Borde gris claro */
+}
+
+.contacto-form .btn {
+  background-color: #007bff; /* Color de fondo del botón */
+  color: #fff; /* Color del texto del botón */
+  padding: 10px; /* Espaciado interno */
+  border-radius: 5px; /* Bordes redondeados */
+  border: none; /* Sin borde */
+  cursor: pointer; /* Cursor en forma de mano */
+  width: 100%; /* Ancho completo */
+}
+
+.contacto-form .btn:hover {
+  background-color: #0056b3; /* Color de fondo más oscuro al pasar el cursor */
+}
+
+
+/* Estilos para la página de registro */
+.registro-container {
+  background: #f9f9f9; /* Fondo claro */
+  padding: 20px; /* Espaciado interno */
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra */
+  max-width: 500px; /* Ancho máximo */
+  margin: 0 auto; /* Centrado */
+}
+
+.registro-container h1 {
+  text-align: center; /* Centrar el título */
+  margin-bottom: 20px; /* Espaciado inferior */
+}
+
+.registro-container .form-label {
+  font-weight: bold; /* Negrita para las etiquetas */
+}
+
+.registro-container .form-control,
+.registro-container textarea {
+  border-radius: 5px; /* Bordes redondeados para los campos de entrada */
+  border: 1px solid #ddd; /* Borde gris claro */
+}
+
+.registro-container .btn {
+  background-color: #007bff; /* Color de fondo del botón */
+  color: #fff; /* Color del texto del botón */
+  padding: 10px; /* Espaciado interno */
+  border-radius: 5px; /* Bordes redondeados */
+  border: none; /* Sin borde */
+  cursor: pointer; /* Cursor en forma de mano */
+  width: 100%; /* Ancho completo */
+  margin-top: 20px; /* Espaciado superior */
+}
+
+.registro-container .btn:hover {
+  background-color: #0056b3; /* Color de fondo más oscuro al pasar el cursor */
 }

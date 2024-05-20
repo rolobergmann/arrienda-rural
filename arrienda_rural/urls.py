@@ -41,6 +41,7 @@ urlpatterns = [
     path('ajax/cargar-comunas/', web_views.cargar_comunas, name='cargar_comunas'),
     path('inmueble/<int:pk>/editar/', web_views.InmuebleUpdateView.as_view(), name='editar_inmueble'),
     path('inmueble/<int:pk>/eliminar/', web_views.eliminar_inmueble, name='eliminar_inmueble'),
+    path('inmueble/<int:inmueble_id>/liberar/', web_views.liberar_inmueble, name='liberar_inmueble'),
 ]
 
 urlpatterns += [

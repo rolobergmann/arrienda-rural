@@ -1,21 +1,15 @@
 {% extends 'base.html' %}
 
 {% block contenido %}
-  <div class="publicar-container mt-5">
-    <div class="row">
-      <div class="col-md-8 offset-md-2 publicar-form">
-        <h1 class="mb-4">Publica tu propiedad en 5 minutos!</h1>
-        <form method="post" enctype="multipart/form-data">
-          {% csrf_token %}
-          <div class="mb-3">{{ direccion_form.as_p }}</div>
-          <div class="mb-3">{{ inmueble_form.as_p }}</div>
-          <div class="mb-3">{{ imagen_form.as_p }}</div>
-          <button type="submit" class="btn btn-primary w-100">Guardar</button>
-        </form>
-      </div>
-    </div>
+  <div class="contenedor publicar-container">
+    <h1>Publica tu propiedad en 5 minutos!</h1>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ direccion_form.as_p }}
+      {{ inmueble_form.as_p }}
+      <button type="submit" class="btn btn-primary">Guardar</button>
+    </form>
   </div>
-
   <script type="text/javascript">
     $(document).ready(function () {
       $('#id_region').change(function () {

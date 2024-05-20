@@ -67,7 +67,7 @@
             <a href="{% url 'editar_inmueble' inmueble.pk %}" class="btn btn-primary">Editar</a>
             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarInmuebleModal{{ inmueble.id }}">Eliminar</button>
           {% elif is_renting %}
-            <a href="#" class="btn btn-warning btn-sm">Pedir fin del contrato</a>
+            <a href="{% url 'liberar_inmueble' inmueble_id=inmueble.id %}" class="btn btn-warning btn-sm">Pedir fin del contrato</a>
           {% endif %}
         {% else %}
           <a href="{% url 'login' %}" class="btn btn-success">Inicia sesión para arrendar</a>

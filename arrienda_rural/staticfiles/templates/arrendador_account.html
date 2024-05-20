@@ -25,7 +25,7 @@
                 </div>
                 <div class="card-body">
                   {% if inmueble.imagenes.all %}
-                    <img src="{{ inmueble.imagenes.first.imagen.url }}" class="img-fluid mb-3" alt="Imagen del inmueble" />
+                    <img src="{{ inmueble.imagenes.first.imagen.url }}" class="img-fluid mb-3 thumbnail" alt="Imagen del inmueble" />
                   {% else %}
                     <p>No hay imágenes disponibles para este inmueble.</p>
                   {% endif %}
@@ -54,7 +54,7 @@
                     <strong>Precio de Arriendo:</strong> ${{ inmueble.precio_arriendo }}
                   </p>
                   <p class="card-text">
-                    <strong>Dirección:</strong> {{ inmueble.direccion }}
+                    <strong>Comuna:</strong> {{ inmueble.direccion_id.comuna.nombre }}, {{ inmueble.direccion_id.comuna.region.nombre }}
                   </p>
                   <p class="card-text">
                     <strong>Estado:</strong> {{ inmueble.get_estado_display }}

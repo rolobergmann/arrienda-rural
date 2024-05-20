@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% load static %} {% block contenido %}
-  <div class="container">
-    <div class="col-12 col-md-6 offset-0 offset-md-3 mt-4 mb-4">
+  <div class="contacto-container container">
+    <div class="col-12 col-md-6 offset-0 offset-md-3 mt-4 mb-4 contacto-form">
       <h3 class="text-center">Contáctanos</h3>
 
       <div>
@@ -10,7 +10,7 @@
 
           {{ form.non_field_errors }}
 
-          <div class="mb-3 text-center">
+          <div class="mb-3">
             <label for="{{ form.customer_name.id_for_label }}" class="form-label">{{ form.customer_name.label_tag }}</label>
             <div>{{ form.customer_name }}</div>
             <div class="text-danger">{{ form.customer_name.errors }}</div>
@@ -27,7 +27,7 @@
             <div>{{ form.message }}</div>
             <div class="text-danger">{{ form.message.errors }}</div>
           </div>
-          <input type="submit" value="Enviar" />
+          <button type="submit" class="btn btn-primary w-100">Enviar</button>
         </form>
       </div>
     </div>

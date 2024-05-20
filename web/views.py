@@ -7,7 +7,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.utils import timezone
 from django.views.generic import ListView
 
-from web.forms import MultipleImageForm,ContactFormModelForm,RegistroForm, UserUpdateForm,InmuebleCreationForm,DireccionForm,InmuebleUpdateForm
+from web.forms import AddPhotoForm,ContactFormModelForm,RegistroForm, UserUpdateForm,InmuebleCreationForm,DireccionForm,InmuebleUpdateForm
 from web.models import ContactForm, Inmueble, RegionesChile, ComunasChile, ExtendUsuario,Imagen
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin  
@@ -192,6 +192,7 @@ class ArrendadorUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return reverse('arrendador_account')
         
 
+
 def inmueble_view(request, pk):
     inmueble = get_object_or_404(Inmueble, pk=pk)
     imagenes = inmueble.imagenes.all()
@@ -280,27 +281,59 @@ def eliminar_inmueble(request, pk):
 def crear_inmueble(request):
     if request.method == 'POST':
         direccion_form = DireccionForm(request.POST)
-        inmueble_form = InmuebleCreationForm(request.POST)
-        imagen_form = MultipleImageForm(request.POST, request.FILES)
+        inmueble_form = AddPhotoForm(request.POST, request.FILES)
 
-        if direccion_form.is_valid() and inmueble_form.is_valid() and imagen_form.is_valid():
+        # Mensajes de depuración para verificar los datos recibidos
+        print("Datos de la dirección:", request.POST)
+        print("Datos del inmueble:", request.POST)
+        print("Archivos de imagen:", request.FILES.getlist('imagenes'))
+
+        if direccion_form.is_valid() and inmueble_form.is_valid():
             direccion = direccion_form.save()
             inmueble = inmueble_form.save(commit=False)
             inmueble.direccion_id = direccion
             inmueble.owner = request.user
             inmueble.save()
 
-            for img in request.FILES.getlist('imagenes'):
-                Imagen.objects.create(inmueble=inmueble, imagen=img)
+            if request.FILES.getlist('imagenes'):
+                for img in request.FILES.getlist('imagenes'):
+                    print(f"Subiendo imagen: {img}")  # Mensaje de depuración
+                    Imagen.objects.create(inmueble=inmueble, imagen=img)
+            else:
+                print("No se subieron imágenes.")
 
-            return redirect('user_redirect')  # Reemplaza con la URL de éxito deseada
+            messages.success(request, "Inmueble creado exitosamente.")
+            return redirect('user_redirect')
+        else:
+            # Mensajes de depuración para errores de formulario
+            print("Errores en los formularios:")
+            print("Errores en el formulario de dirección:", direccion_form.errors)
+            print("Errores en el formulario de inmueble:", inmueble_form.errors)
+            print("Errores en el formulario de imágenes:", imagen_form.errors)
     else:
         direccion_form = DireccionForm()
-        inmueble_form = InmuebleCreationForm()
-        imagen_form = MultipleImageForm()
+        inmueble_form = AddPhotoForm()
 
     return render(request, 'publicar.html', {
         'direccion_form': direccion_form,
         'inmueble_form': inmueble_form,
-        'imagen_form': imagen_form,
     })
+
+
+@login_required
+def liberar_inmueble(request, inmueble_id):
+    inmueble = get_object_or_404(Inmueble, id=inmueble_id)
+    usuario_extendido = ExtendUsuario.objects.get(usuario=request.user)
+
+    if usuario_extendido.tipo_usuario == 'arrendatario':
+        if usuario_extendido.inmuebles_arrendados.filter(id=inmueble_id).exists():
+            usuario_extendido.inmuebles_arrendados.remove(inmueble)
+            inmueble.estado = True  # Cambiar el estado del inmueble a disponible
+            inmueble.save()
+            messages.success(request, "¡Has liberado el inmueble exitosamente!")
+        else:
+            messages.error(request, "No tienes este inmueble en tu lista de inmuebles arrendados.")
+    else:
+        messages.error(request, "No tienes permiso para liberar este inmueble.")
+
+    return redirect('vista_inmueble', pk=inmueble_id)

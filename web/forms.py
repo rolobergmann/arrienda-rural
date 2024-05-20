@@ -3,7 +3,6 @@ from .models import ContactForm, ExtendUsuario, Inmueble, ComunasChile,RegionesC
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.forms import inlineformset_factory
-from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.forms.widgets import ClearableFileInput
 
@@ -47,17 +46,40 @@ class InmuebleUpdateForm(forms.ModelForm):
         fields = ['nombre', 'description', 'm2_construidos', 'm2_totales', 'estacionamientos', 'cantidad_habitaciones', 'cantidad_banos', 'tipo_de_inmueble', 'precio_arriendo', 'estado','destacado', 'disponible']
         labels = {'cantidad_banos':'Cantidad de baños'}
 
-class CustomClearableFileInput(ClearableFileInput):
+class MultipleFileInput(ClearableFileInput):
     allow_multiple_selected = True
 
-class MultipleImageForm(forms.Form):
-    imagenes = forms.ImageField(widget=CustomClearableFileInput(attrs={'multiple': True}))
+class MultipleFileField(forms.FileField):
+    def __init__(self, *args, **kwargs):
+        kwargs.setdefault("widget", MultipleFileInput())
+        super().__init__(*args, **kwargs)
+
+    def clean(self, data, initial=None):
+        single_file_clean = super().clean
+        if isinstance(data, (list, tuple)):
+            result = [single_file_clean(d, initial) for d in data]
+        else:
+            result = single_file_clean(data, initial)
+        return result
 
 class InmuebleCreationForm(forms.ModelForm):
     class Meta:
         model = Inmueble
         fields = ['nombre', 'description', 'm2_construidos', 'm2_totales', 'estacionamientos', 'cantidad_habitaciones', 'cantidad_banos', 'tipo_de_inmueble', 'precio_arriendo', 'estado', 'destacado', 'disponible']
 
+class AddPhotoForm(forms.ModelForm):
+    imagenes = MultipleFileField()
+
+    class Meta:
+        model = Inmueble
+        fields = ['nombre', 'description', 'm2_construidos', 'm2_totales', 'estacionamientos', 'cantidad_habitaciones', 'cantidad_banos', 'tipo_de_inmueble', 'precio_arriendo', 'estado', 'destacado', 'disponible']
+
+    def save(self, commit=True):
+        result = super().save(commit=commit)
+        if commit:
+            for image in self.cleaned_data['imagenes']:
+                Imagen(inmueble=result, imagen=image).save()
+        return result
 class DireccionForm(forms.ModelForm):
     region = forms.ModelChoiceField(queryset=RegionesChile.objects.all(), required=True)
     comuna = forms.ModelChoiceField(queryset=ComunasChile.objects.none(), required=True)
