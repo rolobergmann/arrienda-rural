@@ -305,3 +305,68 @@ footer p {
   cursor: pointer; /* Para indicar que se puede hacer clic */
   margin: 5px; /* Espacio entre las imágenes */
 }
+
+
+/* Estilos para la página de publicación de propiedades */
+.publicar-container {
+  background: #f9f9f9; /* Fondo claro para el formulario */
+  padding: 20px; /* Espaciado interno */
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra */
+}
+
+.publicar-form .form-label {
+  font-weight: bold; /* Negrita para las etiquetas */
+}
+
+.publicar-form .form-control,
+.publicar-form textarea {
+  border-radius: 5px; /* Bordes redondeados para los campos de entrada */
+  border: 1px solid #ddd; /* Borde gris claro */
+}
+
+.publicar-form .btn {
+  background-color: #007bff; /* Color de fondo del botón */
+  color: #fff; /* Color del texto del botón */
+  padding: 10px; /* Espaciado interno */
+  border-radius: 5px; /* Bordes redondeados */
+  border: none; /* Sin borde */
+  cursor: pointer; /* Cursor en forma de mano */
+  width: 100%; /* Ancho completo */
+}
+
+.publicar-form .btn:hover {
+  background-color: #0056b3; /* Color de fondo más oscuro al pasar el cursor */
+}
+
+/* Estilos para la página de contacto */
+.contacto-container {
+  background: #f9f9f9; /* Fondo claro para el formulario */
+  padding: 20px; /* Espaciado interno */
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra */
+}
+
+.contacto-form .form-label {
+  font-weight: bold; /* Negrita para las etiquetas */
+}
+
+.contacto-form .form-control,
+.contacto-form textarea {
+  border-radius: 5px; /* Bordes redondeados para los campos de entrada */
+  border: 1px solid #ddd; /* Borde gris claro */
+}
+
+.contacto-form .btn {
+  background-color: #007bff; /* Color de fondo del botón */
+  color: #fff; /* Color del texto del botón */
+  padding: 10px; /* Espaciado interno */
+  border-radius: 5px; /* Bordes redondeados */
+  border: none; /* Sin borde */
+  cursor: pointer; /* Cursor en forma de mano */
+  width: 100%; /* Ancho completo */
+}
+
+.contacto-form .btn:hover {
+  background-color: #0056b3; /* Color de fondo más oscuro al pasar el cursor */
+}
