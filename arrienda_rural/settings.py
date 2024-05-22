@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure-oh^@zfz7zxwcon#vx@7^ly*ilkfohe%8_orazp#wcg$l_3&1%e
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['arrienda-rural-59d10799eb1f.herokuapp.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['arrienda-rural-59d10799eb1f.herokuapp.com', 'www.arriendarural.top','arriendarural.top','localhost', '127.0.0.1']
 
 
 
