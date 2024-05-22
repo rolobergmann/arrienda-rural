@@ -1,6 +1,6 @@
 # Arrienda Rural
 
-![Logo]([https://arrienda-rural-59d10799eb1f.herokuapp.com/static/media/index/logo_nav.png])
+![Logo](https://arrienda-rural-59d10799eb1f.herokuapp.com/static/media/index/logo_nav.png)
 
 Arrienda Rural es una aplicación web diseñada para simplificar el proceso de arriendo de propiedades en áreas rurales. Permite a los usuarios publicar, buscar y gestionar propiedades de alquiler, proporcionando una experiencia fluida tanto para propietarios como para arrendatarios.
 
