@@ -3,7 +3,6 @@ from .models import ContactForm, ExtendUsuario, Inmueble, ComunasChile,RegionesC
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.forms import inlineformset_factory
-from django.dispatch import receiver
 from django.forms.widgets import ClearableFileInput
 
 # Create the form class.

@@ -1,0 +1,432 @@
+/* Estilos generales */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transform: translateY(-24px);
+}
+
+.navbar {
+  background-color: #ffffff !important;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transform: translateY(-100%);
+  z-index: 1000;
+}
+
+
+.navbar-brand {
+  max-width: 100px;
+  max-height: 70px;
+  margin-right: 1rem;
+  margin-left: 1rem;
+  border-radius: 10px;
+}
+
+.navbar-brand img {
+  border-radius: 10%;
+}
+
+.navbar-brand:hover {
+  color: #007bff;
+}
+
+.navbar-nav .nav-link {
+  color: #333;
+  padding: 1rem 1.5rem;
+}
+
+.navbar-nav .nav-link:hover {
+  background-color: black;
+  opacity: 50%;
+}
+
+.navbar-form {
+  margin-left: auto;
+  width: auto;
+}
+
+.navbar-form .form-control {
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  padding: 0.75rem 1.25rem;
+}
+
+.navbar-form .form-control::placeholder {
+  color: #999;
+}
+
+.navbar-form .btn {
+  background-color: #007bff;
+  border: none;
+  border-radius: 20px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.navbar-form .btn:hover {
+  background-color: #0056b3;
+}
+
+/* Estilos cuando el navbar está colapsado */
+.navbar-collapse.show {
+  background-color: transparent !important;
+  position: absolute;
+  top: 56px; /* Asegúrate de que sea la altura del navbar */
+  left: 0;
+  right: 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  right: 0 !important
+}
+
+
+/* Para evitar que el contenido se desplace hacia abajo */
+.collapse:not(.show) {
+  display: none;
+}
+
+
+.whatsapp-button {
+  display: inline-block;
+  background-color: #25d365;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.whatsapp-button:hover {
+  background-color: #1cb14e;
+}
+
+.whatsapp-button i.fa {
+  font-size: 20px;
+  margin-right: 5px;
+}
+
+.container form {
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 5px;
+  margin: 0 auto;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.container form input[type="text"],
+.container form input[type="email"],
+.container form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  box-sizing: border-box;
+}
+
+.text-danger {
+  color: #dc3545;
+}
+
+.container form input[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 auto;
+}
+
+.container form input[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.hero-section {
+  background-image: url("../media/index/hero2.1a7d44a39def.jpeg");
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  position: relative;
+  top: 0;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.hero-section .container {
+  position: relative;
+  z-index: 2;
+}
+
+.navbar-light .navbar-nav .nav-link {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.navbar-light .navbar-nav .nav-link:hover,
+.navbar-light .navbar-nav .nav-link.active {
+  color: rgba(255, 255, 255, 1);
+}
+
+.navbar-light {
+  background: transparent !important;
+}
+
+footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  margin-top: 20px;
+}
+
+footer p {
+  margin: 0;
+  padding: 10px;
+}
+
+/* Estilos para los inmuebles */
+.imueble-list-card {
+  transition: transform 0.3s ease;
+  max-height: 350px;
+  min-height: 350px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.inmueble-card{
+  transition: transform 0.3s ease;
+  max-height: 780px;
+  min-height: 780px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Hover para las tarjetas */
+.inmueble-card:hover, .imueble-list-card:hover {
+  transform: scale(1.02);
+}
+
+/* Card body styling to ensure consistent alignment */
+.inmueble-card .card-body, .imueble-list-card .card-body {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Ensuring images don't affect the layout */
+.imueble-list-card img {
+  max-height: 350px;
+  object-fit: cover;
+  width: 100%;
+  padding-right: 10px;
+}
+.inmueble-card img {
+  max-height: 200px;
+  object-fit: cover;
+  width: 100%;
+}
+
+/* Ensuring card footer is always at the bottom */
+.inmueble-card .card-footer, .imueble-list-card .card-footer {
+  margin-top: auto;
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+  .inmueble-card, .imueble-list-card {
+    height: auto;
+  }
+
+  .inmueble-card img, .imueble-list-card img {
+    max-height: 100px;
+  }
+}
+@media (max-width: 768px) {
+  .inmueble-card, .imueble-list-card {
+    height: auto;
+  }
+
+  .inmueble-card img, .imueble-list-card img {
+    max-height: 150px;
+  }
+}
+
+@media (max-width: 576px) {
+  .inmueble-card, .imueble-list-card {
+    height: auto;
+  }
+
+  .inmueble-card img, .imueble-list-card img {
+    max-height: 100px;
+  }
+}
+@media (max-width: 768px) {
+  .thumbnail {
+    width: 48%; /* Dos thumbnails por fila en pantallas más pequeñas */
+  }
+}
+
+@media (max-width: 480px) {
+  .thumbnail {
+    width: 98%; /* Un thumbnail por fila en pantallas muy pequeñas */
+  }
+}
+
+.card {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow: hidden; /* Para asegurarse de que la imagen no se salga de la tarjeta */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+}
+
+.card-body {
+  padding: 15px;
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* Distribuir las imágenes uniformemente */
+  margin: 0 -5px; /* Para ajustar el margen lateral de los thumbnails */
+}
+
+.thumbnail {
+  width: 300px; /* Ajusta este valor para controlar cuántos thumbnails caben en una fila */
+  height: 150px; /* Tamaño de los thumbnails */
+  object-fit: cover; /* Para que las imágenes mantengan su proporción */
+  cursor: pointer; /* Para indicar que se puede hacer clic */
+  margin: 5px; /* Espacio entre las imágenes */
+}
+
+
+/* Estilos para la página de publicación de propiedades */
+.publicar-container {
+  background: #f9f9f9; /* Fondo claro para el formulario */
+  padding: 20px; /* Espaciado interno */
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra */
+}
+
+.publicar-form .form-label {
+  font-weight: bold; /* Negrita para las etiquetas */
+}
+
+.publicar-form .form-control,
+.publicar-form textarea {
+  border-radius: 5px; /* Bordes redondeados para los campos de entrada */
+  border: 1px solid #ddd; /* Borde gris claro */
+}
+
+.publicar-form .btn {
+  background-color: #007bff; /* Color de fondo del botón */
+  color: #fff; /* Color del texto del botón */
+  padding: 10px; /* Espaciado interno */
+  border-radius: 5px; /* Bordes redondeados */
+  border: none; /* Sin borde */
+  cursor: pointer; /* Cursor en forma de mano */
+  width: 100%; /* Ancho completo */
+}
+
+.publicar-form .btn:hover {
+  background-color: #0056b3; /* Color de fondo más oscuro al pasar el cursor */
+}
+
+/* Estilos para la página de contacto */
+.contacto-container {
+  background: #f9f9f9; /* Fondo claro para el formulario */
+  padding: 20px; /* Espaciado interno */
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra */
+}
+
+.contacto-form .form-label {
+  font-weight: bold; /* Negrita para las etiquetas */
+}
+
+.contacto-form .form-control,
+.contacto-form textarea {
+  border-radius: 5px; /* Bordes redondeados para los campos de entrada */
+  border: 1px solid #ddd; /* Borde gris claro */
+}
+
+.contacto-form .btn {
+  background-color: #007bff; /* Color de fondo del botón */
+  color: #fff; /* Color del texto del botón */
+  padding: 10px; /* Espaciado interno */
+  border-radius: 5px; /* Bordes redondeados */
+  border: none; /* Sin borde */
+  cursor: pointer; /* Cursor en forma de mano */
+  width: 100%; /* Ancho completo */
+}
+
+.contacto-form .btn:hover {
+  background-color: #0056b3; /* Color de fondo más oscuro al pasar el cursor */
+}
+
+
+/* Estilos para la página de registro */
+.registro-container {
+  background: #f9f9f9; /* Fondo claro */
+  padding: 20px; /* Espaciado interno */
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra */
+  max-width: 500px; /* Ancho máximo */
+  margin: 0 auto; /* Centrado */
+}
+
+.registro-container h1 {
+  text-align: center; /* Centrar el título */
+  margin-bottom: 20px; /* Espaciado inferior */
+}
+
+.registro-container .form-label {
+  font-weight: bold; /* Negrita para las etiquetas */
+}
+
+.registro-container .form-control,
+.registro-container textarea {
+  border-radius: 5px; /* Bordes redondeados para los campos de entrada */
+  border: 1px solid #ddd; /* Borde gris claro */
+}
+
+.registro-container .btn {
+  background-color: #007bff; /* Color de fondo del botón */
+  color: #fff; /* Color del texto del botón */
+  padding: 10px; /* Espaciado interno */
+  border-radius: 5px; /* Bordes redondeados */
+  border: none; /* Sin borde */
+  cursor: pointer; /* Cursor en forma de mano */
+  width: 100%; /* Ancho completo */
+  margin-top: 20px; /* Espaciado superior */
+}
+
+.registro-container .btn:hover {
+  background-color: #0056b3; /* Color de fondo más oscuro al pasar el cursor */
+}
