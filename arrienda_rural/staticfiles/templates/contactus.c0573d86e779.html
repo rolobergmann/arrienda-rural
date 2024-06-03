@@ -1,0 +1,35 @@
+{% extends 'base.html' %} {% load static %} {% block contenido %}
+  <div class="contacto-container container">
+    <div class="col-12 col-md-6 offset-0 offset-md-3 mt-4 mb-4 contacto-form">
+      <h3 class="text-center">Contáctanos</h3>
+
+      <div>
+        <form action="/contacto" method="post">
+          {% csrf_token %}
+          <!-- {{ form }} -->
+
+          {{ form.non_field_errors }}
+
+          <div class="mb-3">
+            <label for="{{ form.customer_name.id_for_label }}" class="form-label">{{ form.customer_name.label_tag }}</label>
+            <div>{{ form.customer_name }}</div>
+            <div class="text-danger">{{ form.customer_name.errors }}</div>
+
+            <label for="{{ form.rut.id_for_label }}" class="form-label">{{ form.rut.label_tag }}</label>
+            <div>{{ form.rut }}</div>
+            <div class="text-danger">{{ form.rut.errors }}</div>
+
+            <label for="{{ form.customer_email.id_for_label }}" class="form-label">{{ form.customer_email.label_tag }}</label>
+            <div>{{ form.customer_email }}</div>
+            <div class="text-danger">{{ form.customer_email.errors }}</div>
+
+            <label for="{{ form.message.id_for_label }}" class="form-label">{{ form.message.label_tag }}</label>
+            <div>{{ form.message }}</div>
+            <div class="text-danger">{{ form.message.errors }}</div>
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Enviar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

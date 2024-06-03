@@ -1,0 +1,58 @@
+{% load static %}
+<div class="hero-section">
+  <div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container">
+        <a class="navbar-brand" href="{% url 'index' %}"><img src="{% static 'media/index/logo_nav.png' %}" /></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'arrendar_list' %}">Arrendar</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'publicar_inmueble' %}">Publicar</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'contacto' %}">Contacto</a>
+            </li>
+            <li>
+              <a class="nav-link" href="{% url 'user_redirect' %}">Su cuenta</a>
+            </li>
+            {% if request.user.is_superuser %}
+              <li>
+                <a class="nav-link" href="/admin/" target="_blank">Admin</a>
+              </li>
+            {% endif %}
+          </ul>
+          <form class="justify-content-start">
+            {% if request.user.is_authenticated %}
+              {{ user.username|upper }}
+              ({{ user.email }})
+
+              <a class="btn btn-dark" href="{% url 'exit' %}" role="button">Logout</a>
+              {% comment %}
+              <form action="{% url 'logout' %}" method="POST">
+                {% csrf_token %}
+                <button class="btn btn-dark" type="submit">Logout</button>
+                {% endcomment %}
+              </form>
+            {% else %}
+              <a class="btn btn-dark" href="{% url 'login' %}" role="button">Login</a>
+              <a class="btn btn-dark" href="{% url 'registro' %}" role="button">Registrarse</a>
+            {% endif %}
+          </form>
+        </div>
+      </div>
+    </nav>
+    <div class="container hero-content">
+      <h1 class="display-4 text-white">Bienvenido a Arrienda Rural</h1>
+      <p class="lead text-white">Lejos de la ciudad, cerca de ti.</p>
+    </div>
+  </div>
+</div>

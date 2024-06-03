@@ -1,0 +1,97 @@
+{% extends 'base.html' %} {% load static %} {% block contenido %}
+  <h1>Inmuebles</h1>
+
+  <form method="get" id="filter-form">
+    <label for="region">Región:</label>
+    <select name="region" id="id_region">
+      <option value="">----</option>
+      {% for region in regiones %}
+        <option value="{{ region.id }}">{{ region.nombre }}</option>
+      {% endfor %}
+    </select>
+
+    <label for="tipo_de_inmueble">Tipo de Inmueble:</label>
+    <select name="tipo_de_inmueble" id="id_tipo_de_inmueble">
+      <option value="">----</option>
+      {% for value, label in tipos_de_inmueble %}
+        <option value="{{ value }}">{{ label }}</option>
+      {% endfor %}
+    </select>
+
+    <label for="imagenes">Contiene Imágenes:</label>
+    <select name="imagenes" id="id_imagenes">
+      <option value="">----</option>
+      <option value="Not Null">Sí</option>
+      <option value="Null">No</option>
+    </select>
+
+    <button type="button" id="clear-filters" class="btn btn-secondary btn-sm">Limpiar Filtros</button>
+  </form>
+
+  <div class="container">
+    <div class="row">
+      {% for inmueble in inmuebles %}
+        <div class="col-md-4 mb-4">
+          <div class="imueble-list-card card h-100">
+            {% if inmueble.imagenes.all %}
+              <img src="{{ inmueble.imagenes.first.imagen.url }}" class="img-fluid thumbnail mb-3" alt="Imagen del inmueble" />
+            {% else %}
+              <p>Sin imagenes</p>
+            {% endif %}
+            <div class="card-body">
+              <h5 class="card-title">{{ inmueble.nombre }}</h5>
+              <p class="card-text">{{ inmueble.description|truncatewords:20 }}</p>
+              <p class="card-text">
+                <i class="fas fa-map-marker-alt"></i> {{ inmueble.direccion_id.comuna.nombre }}, {{ inmueble.direccion_id.comuna.region.nombre }}
+              </p>
+              <a href="{% url 'vista_inmueble' inmueble.id %}" class="btn btn-primary btn-sm">Ver más</a>
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        <div class="col-md-12 text-center">
+          <p class="text-muted">No se encontraron inmuebles.</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('filter-form')
+      const regionSelect = document.getElementById('id_region')
+      const tipoInmuebleSelect = document.getElementById('id_tipo_de_inmueble')
+      const imagenesSelect = document.getElementById('id_imagenes')
+      const clearFiltersButton = document.getElementById('clear-filters')
+    
+      function applyFilters() {
+        form.submit()
+      }
+    
+      function clearFilters() {
+        regionSelect.value = ''
+        tipoInmuebleSelect.value = ''
+        imagenesSelect.value = ''
+        form.submit()
+      }
+    
+      regionSelect.addEventListener('change', applyFilters)
+      tipoInmuebleSelect.addEventListener('change', applyFilters)
+      imagenesSelect.addEventListener('change', applyFilters)
+      clearFiltersButton.addEventListener('click', clearFilters)
+    
+      // Set the initial values from the URL parameters
+      const urlParams = new URLSearchParams(window.location.search)
+      if (urlParams.has('region')) {
+        regionSelect.value = urlParams.get('region')
+      }
+      if (urlParams.has('tipo_de_inmueble')) {
+        tipoInmuebleSelect.value = urlParams.get('tipo_de_inmueble')
+      }
+      // Set the initial value for the imagenes select
+      if (urlParams.has('imagenes')) {
+        imagenesSelect.value = urlParams.get('imagenes')
+      }
+    })
+  </script>
+{% endblock %}
